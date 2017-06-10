@@ -1,0 +1,39 @@
+<div class="breadcrumbs">
+   <a [routerLink]="['/account/my-account']" routerLinkActive="breadcrumbs__item--active" class="breadcrumbs__item">My Account</a>
+    <span class="separator separator--bullet"></span>
+    <a *ngIf="user_auth_method == 'user'" [routerLink]="['/account/auth-user']" routerLinkActive="breadcrumbs__item--active" class="breadcrumbs__item">Authorized User</a>
+    <a *ngIf="user_auth_method == 'ip'" [routerLink]="['/account/auth-ip']" routerLinkActive="breadcrumbs__item--active" class="breadcrumbs__item">Authorized IPs</a>
+    <span *ngIf="user_access_type == 'whitelist'" class="separator separator--bullet"></span>
+    <a *ngIf="user_access_type == 'whitelist'" [routerLink]="['/account/user-whitelist']" routerLinkActive="breadcrumbs__item--active" class="breadcrumbs__item">User Whitelist</a>
+</div>
+<form action="#" method="post" class="block page_block_inner">
+    <h4 class="block__title">Your whitelist</h4>
+    <p class="block__desc">Add a site to the list only if you receive a site blocked error - the sites included in the whitelists (both your personal and a generic one) will be allowed.</p>
+    <div class="whitelist-grid">
+        <div class="row">
+            <div class="col-xxs col-xs-6 col-sm-4" *ngFor="let item of whitelist">
+                <div class="whitelist-grid__item btn" [style.background-color]="item.currentColor">
+                    <span [attr.title]="item" class="whitelist-grid__label">{{item.key}}</span>
+                    <button class="btn btn--remove" (click)="remove(item)">
+                        <svg><use xlink:href="#close" /></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div [innerHTML]="errorMessage"></div>
+    <div class="row">
+        <div class="col-xxs col-xs-6 input-wrapper">
+            <input type="text" class="input-field" name="whitelist" value="google.com" #address>
+        </div>
+        <div class="col-xxs col-xs-6 col-lg-4 input-wrapper">
+            <button type="submit" class="btn btn--full" (click)="addToWhiteList(address.value)">Add to List</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xxs col-xs-6 col-lg-4 input-wrapper">
+            <button type="submit" class="btn btn--full" (click)="updateWhitelist()">Update</button>
+        </div>
+    </div>
+</form>
+<div class="sidebar"><account-sidebar></account-sidebar></div>

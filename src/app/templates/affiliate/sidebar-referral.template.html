@@ -1,0 +1,11 @@
+    <div class="block block--with-header">
+        <div class="block__header">
+            <h4 class="block__title">Share your link</h4>
+        </div>
+        <div class="block__inner">
+            <strong>www.limeproxies.com/?ref={{limeProxiesService.userData.uid}}</strong>
+            <div class="block__border-top">
+                <button type="button" class="btn btn--full" (click)="copyTextToClipboard('www.limeproxies.com/?ref=' + limeProxiesService.userData.uid)">Copy link</button>
+            </div>
+        </div>
+    </div>

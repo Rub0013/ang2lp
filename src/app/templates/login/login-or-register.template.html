@@ -1,0 +1,23 @@
+<div class="notify-top-popup">
+</div>
+            <svg class="logo">
+                <use xlink:href="#logo"></use>
+            </svg>
+<div class="block">
+    <h4 class="page-title">Login into your account</h4>
+    <div class="form-wrapper">
+        <form [formGroup]="loginOrRegisterForm">
+            <div class="input-wrapper">
+                <input type="text" class="input-field" name="username" placeholder="Username" [(ngModel)]="username" [formControl]="loginOrRegisterForm.controls['username']">
+            </div>
+            <div class="input-wrapper">
+                <input type="password" class="input-field" name="password" placeholder="Password" [(ngModel)]="password" [formControl]="loginOrRegisterForm.controls['password']">
+            </div>
+            <div class="input-wrapper">
+                <button type="submit" class="btn btn--full" (click)="login()" [disabled]="!loginOrRegisterForm.valid" [ngClass]="{'btn--gray': !loginOrRegisterForm.valid}" >Login</button>
+            </div>
+        </form>
+    </div>
+    <a routerLink="/login/forgot-password" class="forgot-password">Forgot your password</a>
+</div>
+<a [routerLink]="['signup']" class="btn btn--green btn--shadow btn-cta">Create your account</a>

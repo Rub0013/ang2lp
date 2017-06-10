@@ -1,0 +1,40 @@
+<div class="breadcrumbs">
+    <a [routerLink]="['/affiliate/',{outlets: {main: ['referral'],side:['referral-sidebar']}}]" class="breadcrumbs__item" routerLinkActive="breadcrumbs__item--active">Referral</a>
+    <span class="separator separator--bullet"></span>
+    <a [routerLink]="['/affiliate/',{outlets: {main: ['stats'],side:null}}]" class="breadcrumbs__item" routerLinkActive="breadcrumbs__item--active">Stats</a>
+    <span class="separator separator--bullet"></span>
+    <a [routerLink]="['/affiliate/',{outlets: {main: ['payouts'],side:['payouts-sidebar']}}]" class="breadcrumbs__item" routerLinkActive="breadcrumbs__item--active">Payouts</a>
+</div>
+<div class="block block--with-header">
+    <div class="block__header">
+        <h4 class="block__title">Earnings</h4>
+    </div>
+    <div class="block__inner">
+        <h4 class="block__title">Unpaid Earnings</h4>
+        <p class="block__desc">Earnings must be older than thirty (30) days old before payouts can be issued. Once the payout minimum is reached, payments are generated on the business day following the 1st and 15th of each month.</p>
+    </div>
+</div>
+<div class="block block--with-header">
+    <div class="block__header">
+        <h4 class="block__title">Payout History</h4>
+    </div>
+  <div class="table-responsive">
+    <table class="block__inner table">
+        <thead class="table__header table__header--small">
+            <tr>
+                <th class="table__cell">Method</th>
+                <th class="table__cell">Date</th>
+                <th class="table__cell">Amount</th>
+                <th class="table__cell">Status</th>
+            </tr>
+        </thead>
+        <tbody class="table__body">
+            <tr>
+                <td class="table__cell" colspan="4">
+                    <h4 class="block__title">No Payout History</h4>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+  </div>
+</div>

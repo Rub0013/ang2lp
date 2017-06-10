@@ -1,0 +1,26 @@
+<div class="sidebar"><chat-info (notifyParent)="getNotification($event)"></chat-info></div>
+<form  (submit)="sendMessage()" class="chat__wrapper page_block_inner">
+    <div class="chat__messages">
+        <div *ngIf="loadComments" class="load-comments">
+            <h4>Loading comments...</h4>
+            <div class="loading"></div>
+        </div>
+        <div *ngFor="let comment of comments" [ngClass]="[comment.author === 'user' ? 'chat__message chat__message--user' : 'chat__message chat__message--support']">
+            <span class="chat__message-user">
+               {{comment.author === 'user' ? 'D' : ''}}
+            </span>
+            <div class="chat__message-text">
+                <pre class="chat__message-pre" [innerHTML]="(comment.body)"></pre>
+                <span class="date-time float-right">{{ formatDate(comment.created_at) }}  UTC</span>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="opened" class="chat__input">
+        <input type="text" name="message_text" class="input-field form-control" placeholder="Message..."  [(ngModel)]="message" required>
+        <!--<textarea name="message_text" class="input-field form-control" placeholder="Message..."  [(ngModel)]="message" required></textarea>-->
+        <button [disabled]="disabled" type="submit" class="btn btn--green send-comment-button">Send</button>
+    </div>
+    <div *ngIf="closed" class="closed-ticket">
+        <h4>This request is closed for comments. You can create a <a [routerLink]="['/support/','tickets']"  [queryParams]="{ addTicket: true }">new ticket</a>.</h4>
+    </div>
+</form>

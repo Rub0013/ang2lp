@@ -1,0 +1,58 @@
+<nav>
+    <ul>
+        <li>
+            <a href="#" routerLink="/home" class="dashboard__link {{isActive[0].value}}" (click)="linkActivated('home')">
+                <svg class="dashboard__icon">
+                    <use *ngIf="activePage=='home'" xlink:href="#home_active"/>
+                    <use *ngIf="activePage!='home'" xlink:href="#home"/>
+                </svg>
+                Home
+            </a>
+        </li>
+        <li>
+            <a href="#" routerLink="/products/manage" class="dashboard__link {{isActive[1].value}}" (click)="linkActivated('products')">
+                <svg class="dashboard__icon">
+                    <use *ngIf="activePage=='products'" xlink:href="#products_active"/>
+                    <use *ngIf="activePage!='products'" xlink:href="#products"/>
+                </svg>
+                Products
+            </a>
+        </li>
+        <li>
+            <a href="#" [routerLink]="['/account/my-account']" class="dashboard__link {{isActive[2].value}}" (click)="linkActivated('account')">
+                <svg class="dashboard__icon">
+                    <use *ngIf="activePage=='account'" xlink:href="#account_active"/>
+                    <use *ngIf="activePage!='account'" xlink:href="#account"/>
+                </svg>
+                Account
+            </a>
+        </li>
+        <li>
+            <a href="#" [routerLink]="['/billing/new']" class="dashboard__link {{isActive[3].value}}" (click)="linkActivated('billing')">
+                <svg class="dashboard__icon">
+                    <use *ngIf="activePage=='billing'" xlink:href="#billing_active"/>
+                    <use *ngIf="activePage!='billing'" xlink:href="#billing"/>
+                </svg>
+                Billing
+            </a>
+        </li>
+        <!--<li>-->
+            <!--<a href="#"  [routerLink]="['/affiliate/',{outlets: {main: ['referral'],side:['referral-sidebar']}}]" class="dashboard__link {{isActive[4].value}}" (click)="linkActivated('affiliate')">-->
+                <!--<svg class="dashboard__icon">-->
+                    <!--<use *ngIf="activePage=='affiliate'" xlink:href="#affiliate_active"/>-->
+                    <!--<use *ngIf="activePage!='affiliate'" xlink:href="#affiliate"/>-->
+                <!--</svg>-->
+                <!--Affiliate-->
+            <!--</a>-->
+        <!--</li>-->
+        <li>
+            <a href="#" routerLink="/support/"
+               class="dashboard__link {{isActive[5].value}}" (click)="linkActivated('support')">
+                <svg class="dashboard__icon">
+                    <use xlink:href="#support"/>
+                </svg>
+                Support
+            </a>
+        </li>
+    </ul>
+</nav>

@@ -1,0 +1,35 @@
+<div [formGroup]="cardPaymentForm" *ngIf="limeProxiesService.showCardPayment" class="modal-overlay"  style="display: block;">
+    <div class="modal" style="height: 480px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Notification</h4>
+            </div>
+            <div class="modal-body">
+                <div class="modal-payment-icon">
+                    <span class="md-pay-icon"></span>
+                </div>
+                <div class="form-group">
+                    <input type="text" formControlName="name" class="form-control" placeholder="Name">
+                    <div *ngIf="cardPaymentForm.get('name').hasError('required')" class="alert alert-danger">Name is required</div>
+                </div>
+                <div class="form-group">
+                    <input type="text" formControlName="number" (keypress)="limeProxiesService._keyPress($event)" class="form-control" placeholder="Card Number">
+                    <div *ngIf="cardPaymentForm.get('number').hasError('pattern')" class="alert alert-danger">Card number must contains 12 digits</div>
+                </div>
+                <div class="form-group">
+                    <div class="half-box">
+                        <input type="text" formControlName="expiry" class="form-control" placeholder="MM/YY">
+                        <div *ngIf="cardPaymentForm.get('expiry').hasError('pattern')" class="alert alert-danger">Format must be MM/YY</div>
+                    </div>
+                    <div class="half-box">
+                        <input type="text" formControlName="cvc" (keypress)="limeProxiesService._keyPress($event)" class="form-control" placeholder="CVC">
+                        <div *ngIf="cardPaymentForm.get('cvc').hasError('pattern')" class="alert alert-danger">Card number must contains 3 or 4 digits</div>
+                    </div>
+                </div>
+            </div>
+
+        </div><div class="modal-footer">
+        <a class="modal-action modal-close waves-effect waves-green btn-flat" (click)="send()" style="width: 100%">Pay</a>
+    </div>
+    </div>
+</div>

@@ -1,0 +1,22 @@
+.notifications-box {
+    border-radius: 3px;
+    box-shadow: 1px 2px 3px 0 rgba(0,0,0,0.1);
+}
+.notifications-box.pointer {
+    cursor: pointer;
+}
+.notifications-box:first-letter {
+    text-transform: uppercase;
+}
+.notifications-dropdown small {
+    font-size: 10px;
+}
+.notifications-dropdown small:first-letter {
+    text-transform: uppercase;
+}
+.notifications-dropdown li:hover .btn--close {
+    color: #53565b;
+}
+.notifications-dropdown .btn--close:hover {
+    color: #e84f3d !important;
+}

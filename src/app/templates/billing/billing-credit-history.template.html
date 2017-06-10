@@ -1,0 +1,35 @@
+<div class="breadcrumbs">
+    <a [routerLink]="['/billing/new']" class="breadcrumbs__item" routerLinkActive="breadcrumbs__item--active">Add</a>
+    <span class="separator separator--bullet"></span>
+    <a [routerLink]="['/billing/history']" class="breadcrumbs__item" routerLinkActive="breadcrumbs__item--active">History</a>
+</div>
+<h4 *ngIf="historyEmpty">No transactions currently available.</h4>
+<table *ngIf="historyFull" class="block table table--highlight credit-history">
+    <thead class="table__header">
+        <tr>
+            <th class="table__cell">Date</th>
+            <th class="table__cell">Payment Method</th>
+            <th class="table__cell">Status</th>
+            <th class="table__cell">Transaction ID</th>
+            <th class="table__cell table__cell--narrow">Value</th>
+            <th class="table__cell">Invoice</th>
+        </tr>
+    </thead>
+    <tbody class="table__body">
+        <tr *ngFor="let item of history">
+            <td class="table__cell table__cell_date">{{item.date}}</td>
+            <td class="table__cell">{{item.method}}</td>
+            <td class="table__cell">{{item.type}}</td>
+            <td class="table__cell">{{item.transaction}}</td>
+            <td class="table__cell table__cell--narrow">
+                <span class="{{item.value > 0 ? 'text-green' : 'text-red'}}" [innerHTML]="(item.value > 0 ? '&#36;' + item.value : '-&#36;' + item.value * -1)"></span>
+            </td>
+            <td class="table__cell">
+                <a *ngIf="item.value < 0" href="#" class="btn-download-invoice">
+                    <img src="assets/images/invoice.png">
+                    Download
+                </a>
+            </td>
+        </tr>
+    </tbody>
+</table>

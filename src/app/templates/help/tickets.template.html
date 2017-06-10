@@ -1,0 +1,41 @@
+<div class="breadcrumbs">
+    <a [routerLink]="['/support/','faq']" class="breadcrumbs__item" routerLinkActive="breadcrumbs__item--active">FAQ</a>
+    <span class="separator separator--bullet"></span>
+    <a [routerLink]="['/support/']" class="breadcrumbs__item" routerLinkActive="breadcrumbs__item--active">Tickets</a>
+</div>
+<div class="block block--with-header page_block_inner">
+    <ul class="block__header tab__nav">
+        <li class="block__title tab__toggle tab__toggle--active">Open Tickets</li>
+        <li class="block__title tab__toggle">Closed Tickets</li>
+    </ul>
+    <div class="tab__content-wrapper">
+        <div class="tab__content-block tab__content-block--active">
+            <h4 class="no-tickets" *ngIf="limeProxiesService.emptyOpenTickets">No open tickets currently available.</h4>
+            <div *ngFor="let ticket of limeProxiesService.openTickets" class="faq-block faq-block--ticket">
+                <h4 class="block__title">
+                    <span class="ticket-status">{{firstToUpperCase(ticket.status)}}</span>
+                    <span class="ticket-status">#{{ticket.id}}</span>
+                    <a class="ticket-link" (click)="cacheAndRedirect(ticket)" >{{ ticket.subject }}</a>
+                </h4>
+                <div class="faq-block__actions">
+                    <button (click)="cacheAndRedirect(ticket)" class="btn btn--small">View</button>
+                    <button (click)="close(ticket)" class="btn btn--dark-gray btn--small">Close ticket</button>
+                </div>
+            </div>
+        </div>
+        <div class="tab__content-block">
+            <h4 class="no-tickets" *ngIf="limeProxiesService.emptyClosedTickets">No closed tickets currently available.</h4>
+            <div *ngFor="let ticket of limeProxiesService.closedTickets" class="faq-block faq-block--ticket">
+                <h4 class="block__title">
+                    <span class="ticket-status">{{firstToUpperCase(ticket.status)}}</span>
+                    <span class="ticket-status">#{{ticket.id}}</span>
+                    <a class="ticket-link" (click)="cacheAndRedirect(ticket)" >{{ ticket.subject }}</a>
+                </h4>
+                <div class="faq-block__actions">
+                    <button (click)="cacheAndRedirect(ticket)" class="btn btn--small">View</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="sidebar"><help-sidebar></help-sidebar></div>

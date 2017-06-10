@@ -1,0 +1,63 @@
+  <div class="home-grid home-grid--actions">
+        <a *ngIf="validatePhone" [routerLink]="['/profile/']" class="home-grid__block btn btn--big btn--shadow">Validate Phone Number</a>
+        <a [routerLink]="['/billing/new']" class="home-grid__block btn btn--big btn--dark-gray btn--shadow">Add Extra Cash</a>
+        <a [routerLink]="['/account/my-account']" class="home-grid__block btn btn--big btn--gray btn--shadow">Manage Account</a>
+    </div>
+    <div class="block block--with-header">
+        <div class="block__header">
+            <h4 class="block__title">Current Activity</h4>
+        </div>
+        <div class="block__inner">
+            <div class="block-group">
+                <h4 class="block__title">General Overview</h4>
+                <div class="home-grid home-grid--overview">
+                    <div class="home-grid__block text-center">
+                        <span class="overview-stat">${{credit}}</span>
+                        <small class="overview-desc">Account Credits</small>
+                    </div>
+                    <div class="home-grid__block text-center">
+                        <span class="overview-stat">{{active}}</span>
+                        <small class="overview-desc">Active Products</small>
+                    </div>
+                    <div class="home-grid__block text-center">
+                        <span class="overview-stat">{{renewal}}</span>
+                        <small class="overview-desc">Upcoming Renewal</small>
+                    </div>
+                </div>
+            </div>
+            <div class="block-group">
+                <h4 class="block__title">Current Products</h4>
+            </div>
+        </div>
+      <div class="table-responsive">
+        <table class="table table--highlight current-products">
+          <thead class="table__header table__header--small">
+          <tr>
+            <th class="table__cell">Order #</th>
+            <th class="table__cell">Expiry Date</th>
+            <th class="table__cell">Location</th>
+            <th class="table__cell table__cell--fit">Manage</th>
+          </tr>
+          </thead>
+          <tbody class="table__body">
+          <tr *ngIf="!products || !products.length" class="text-center no-products">
+            <td colspan="4">no active products, click <a routerLink="/products/new">here</a> to add one</td>
+          </tr>
+          <tr *ngFor="let product of products">
+            <td class="table__cell">{{product.id}}</td>
+            <td class="table__cell">{{product.expiry | date}}</td>
+            <td class="table__cell table__cell--fit">
+              <div class="flags-wrapper">
+                <div class="flag-icon" *ngFor="let flag of product.location">
+                  <img src="assets/images/countries/{{flag.toLowerCase()}}.png">
+                </div>
+              </div>
+            </td>
+            <td class="table__cell table__cell--fit">
+              <a routerLink="/products/manage" class="btn btn--green btn--small">Configure</a>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>

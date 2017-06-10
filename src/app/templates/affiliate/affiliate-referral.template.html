@@ -1,0 +1,41 @@
+<div class="breadcrumbs">
+    <a [routerLink]="['/affiliate/',{outlets: {main: ['referral'],side:['referral-sidebar']}}]" class="breadcrumbs__item" routerLinkActive="breadcrumbs__item--active">Referral</a>
+    <span class="separator separator--bullet"></span>
+    <a [routerLink]="['/affiliate/',{outlets: {main: ['stats'],side:null}}]" class="breadcrumbs__item" routerLinkActive="breadcrumbs__item--active">Stats</a>
+    <span class="separator separator--bullet"></span>
+    <a [routerLink]="['/affiliate/',{outlets: {main: ['payouts'],side:['payouts-sidebar']}}]" class="breadcrumbs__item" routerLinkActive="breadcrumbs__item--active">Payouts</a>
+</div>
+<div class="block">
+    <h4 class="block__title">Refer LimeProxies.com with your unique link and earn $10 per paid signup!</h4>
+    <p class="block__desc">Your referral link uniquely identifies your account, so you can start earning today!</p>
+    <div class="affiliate-grid">
+        <div class="affiliate-grid__block">
+            <span class="affiliate-grid__counter">1</span>
+            <label class="affiliate-grid__label">$10 earned for every new unique paid user you refer.</label>
+        </div>
+        <div class="affiliate-grid__block">
+            <span class="affiliate-grid__counter">2</span>
+            <label class="affiliate-grid__label">Referred users must be active for 30+ days and use at least $10 in payments to be counted as verified sales.</label>
+        </div>
+        <div class="affiliate-grid__block">
+            <span class="affiliate-grid__counter">3</span>
+            <label class="affiliate-grid__label">Payouts are finalized and issued on the business day following the 1st and 15th of each month.</label>
+        </div>
+    </div>
+</div>
+<div class="block">
+    <h4 class="block__title">Share a LimeProxies.com banner and earn $10 per paid signup!</h4>
+    <p class="block__desc">Click on the banner to copy your referral link that identifies your account, so you can start earning today!</p>
+    <div class="block-group">
+        <img src="assets/images/banners/big.png" />
+        <h4 class="block__title">728x90</h4>
+    </div>
+    <div class="block-group">
+        <img src="assets/images/banners/button.png" />
+        <h4 class="block__title">468x60</h4>
+    </div>
+    <div class="block-group">
+        <img src="assets/images/banners/square.png" />
+        <h4 class="block__title">300x250</h4>
+    </div>
+</div>

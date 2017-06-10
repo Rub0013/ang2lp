@@ -1,0 +1,95 @@
+* {
+    padding: 0;
+    margin: 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    word-wrap: break-word;
+}
+.page-container {
+    width: 1150px;
+    margin: auto;
+}
+@font-face {
+     font-family: 'SourceSansPro-Regular';
+
+    src: url('/assets/fonts/SourceSansPro-Regular/SourceSansPro-Regular.eot'); /* IE9 Compat Modes */
+    src: url('/assets/fonts/SourceSansPro-Regular/SourceSansPro-Regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+    url('/assets/fonts/SourceSansPro-Regular/SourceSansPro-Regular.woff') format('woff'), /* Pretty Modern Browsers */
+    url('/assets/fonts/SourceSansPro-Regular/SourceSansPro-Regular.ttf') format('truetype'), /* Safari, Android, iOS */
+    url('/assets/fonts/SourceSansPro-Regular/SourceSansPro-Regular.svg#svgFontName') format('svg'); /* Legacy iOS */
+}
+@font-face {
+     font-family: 'SourceSansPro-Light';
+
+    src: url('/assets/fonts/SourceSansPro-Light/SourceSansPro-Light.eot'); /* IE9 Compat Modes */
+    src: url('/assets/fonts/SourceSansPro-Light/SourceSansPro-Light.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+    url('/assets/fonts/SourceSansPro-Light/SourceSansPro-Light.woff') format('woff'), /* Pretty Modern Browsers */
+    url('/assets/fonts/SourceSansPro-Light/SourceSansPro-Light.ttf') format('truetype'), /* Safari, Android, iOS */
+    url('/assets/fonts/SourceSansPro-Light/SourceSansPro-Light.svg#svgFontName') format('svg'); /* Legacy iOS */
+}
+
+.green-background {
+    width: 100%;
+    position: relative;
+    background: #78ad30;
+    font-family: 'SourceSansPro-Regular',sans-serif;
+}
+
+li {
+    list-style-type: none;
+}
+a, a:hover {
+    text-decoration: none;
+    color: inherit;
+}
+.img-resonsive {
+    max-width: 100%;
+}
+.text-center {
+    text-align: center;
+}
+.main-title {
+    color: #ffffff;
+    font-size: 40px;
+
+}
+.title-md {
+    color: #ffffff;
+    font: 23px 'SourceSansPro-Light';
+}
+.site-content {
+    padding: 50px 0;
+}
+.lang-list {
+    margin-top: 30px;
+
+}
+.lang-list li , .footer-list  li {
+    display: inline-block;
+
+}
+.lang-list a , .footer-list  a {
+    display: block;
+    padding: 5px;
+    color: #ffffff;
+
+}
+.copyright-box  {
+    color: #ffffff;
+    margin: 20px 0;
+}
+.copyright , .footer-list {
+    display: inline-block;
+}
+.copyright {
+    margin: 0 20px;
+}
+.bottom-img {
+    margin-top: 150px;
+}
+@media only screen and (max-width: 1200px) {
+    .page-container {
+        width: 100%;
+    }
+}

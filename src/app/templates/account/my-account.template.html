@@ -1,0 +1,52 @@
+<div class="breadcrumbs">
+    <a [routerLink]="['/account/my-account']" routerLinkActive="breadcrumbs__item--active" class="breadcrumbs__item">My Account</a>
+    <span class="separator separator--bullet"></span>
+    <a *ngIf="user_auth_method == 'user'" [routerLink]="['/account/auth-user']" routerLinkActive="breadcrumbs__item--active" class="breadcrumbs__item">Authorized User</a>
+    <a *ngIf="user_auth_method == 'ip'" [routerLink]="['/account/auth-ip']" routerLinkActive="breadcrumbs__item--active" class="breadcrumbs__item">Authorized IPs</a>
+    <span *ngIf="user_access_type == 'whitelist'" class="separator separator--bullet"></span>
+    <a *ngIf="user_access_type == 'whitelist'" [routerLink]="['/account/user-whitelist']" routerLinkActive="breadcrumbs__item--active" class="breadcrumbs__item">User Whitelist</a>
+</div>
+<form action="#" method="post" class="block page_block_inner">
+    <h4 class="block__title">Your account details</h4>
+    <p class="block__desc">Change your account details, by clicking directly in the field you want to update.</p>
+    <div class="row">
+         <label class="col-xs-12 col-sm-2" style="padding-top: 3.5%;">
+           <b>Auth Method:</b>
+        </label>
+        <div class="col-xs-12 col-sm-5 input-wrapper">
+            <select name="profile_auth" class="input-field autocomplete" [(ngModel)]="selected_auth_method" (change)="setAuthMethodSelected($event.target.value)">
+                <option [value]="auth_method.value" *ngFor="let auth_method of profiles_auth_methods">{{auth_method.display}}</option>
+            </select>
+        </div>
+        <div class="col-xs-12 col-sm-5 input-wrapper">
+            <button class="btn btn--full" (click)="updateAuthMethod()">Update</button>
+        </div>
+    </div>
+    <div class="row">
+         <label class="col-xs-12 col-sm-2" style="padding-top: 3.5%;">
+           <b>Access Type:</b>
+        </label>
+         <div class="col-xs-12 col-sm-5 input-wrapper">
+            <select name="profile_access" class="input-field autocomplete" [(ngModel)]="selected_access_type" (change)="setAccessTypeSelected($event.target.value)">
+                <option [value]='access_type.value' *ngFor="let access_type of profile_access_types">{{access_type.display}}</option>
+            </select>
+        </div>
+        <div class="col-xs-12 col-sm-5 input-wrapper">
+            <button class="btn btn--full {{access_type_btn_name=='PENDING UPDATE'? 'btn--gray':''}}" (click)="requestUpdateAccessType()" [disabled]="access_type_btn_name=='PENDING UPDATE'?true:false">{{access_type_btn_name}}</button>
+        </div>
+    </div>
+    <div class="row">
+         <label class="col-xs-12 col-sm-2" style="padding-top: 3.5%;">
+           <b>Monthly Quota:</b>
+        </label>
+        <div class="col-xs-12 col-sm-5 input-wrapper">
+            <select name="profile_quota" class="input-field autocomplete" [(ngModel)]="selected_quota" (change)="setQuotaSelected($event.target.value)">
+                <option [value]='quota.value' *ngFor="let quota of profile_quotas">{{quota.display}}</option>
+            </select>
+        </div>
+        <div class="col-xs-12 col-sm-5 input-wrapper">
+            <button class="btn btn--full {{quota_btn_name=='PENDING UPDATE'? 'btn--gray':''}}" (click)="requestUpdateQuota()" [disabled]="quota_btn_name=='PENDING UPDATE'?true:false">{{quota_btn_name}}</button>
+        </div>
+    </div>
+</form>
+<div class="sidebar big-sidebar"><account-sidebar #accountSidebar></account-sidebar></div>

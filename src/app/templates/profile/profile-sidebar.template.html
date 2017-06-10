@@ -1,0 +1,22 @@
+    <form class="block block--with-header" [formGroup]="codeVerificationForm">
+        <div class="block__header">
+            <h4 class="block__title">SMS Verification</h4>
+        </div>
+        <div class="block__inner">
+            <div>
+                You can validate your phone number to get 1$ credit for a test proxy!<br /><br />
+
+                Enter your mobile number to verify your account through SMS. 
+            </div>
+            <br />
+            <input type="text" name="sms_code" (keypress)="limeProxiesService._keyPress($event)" [(ngModel)]="code" class="input-field" placeholder="Enter code" [formControl]="codeVerificationForm.controls['code']">
+            <br />
+             <!--<div *ngIf="codeVerificationForm.controls['code'].hasError('required') && codeVerificationForm.controls['code'].touched" class="alert alert-danger">Code is required</div>-->
+            <div style="font-size: 15px;">
+                <i>Note: phone validation is to prevent credit card fraud and to send notifications</i>
+            </div>
+            <div class="block__border-top">
+                <button type="submit" class="btn btn--full" (click)="validateCODE()" [disabled]="!isValid()" [ngClass]="{'btn--gray': !isValid()}">VALIDATE CODE</button>
+            </div>
+        </div>
+    </form>

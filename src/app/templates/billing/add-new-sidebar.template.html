@@ -1,0 +1,50 @@
+<div>
+  <div class="block block--with-header profile-stats">
+        <div class="block__header">
+            <h4 class="block__title">Order review</h4>
+        </div>
+        <div class="block__inner">
+            <ul class="profile-stats__list">
+                <!--<li class="profile-stats__item">
+                    <span class="profile-stats__label">Extra Credit</span>
+                    <span class="profile-stats__value">+$50</span>
+                </li>-->
+                <li class="profile-stats__item">
+                    <span class="profile-stats__label">
+                        <span>Total</span>
+                        <small *ngIf="type == 'payPal'">Billed to PayPal account</small>
+                        <small *ngIf="type == 'fastSpring'">Billed to Credit Card</small>
+                        <small *ngIf="type == 'bitCoin'">Billed to BitCoin account</small>
+                    </span>
+                    <span class="profile-stats__value">{{(productForm.get('num').value || productForm.get('other_num').value || 0)  | currency:'USD':true}}</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+  <div [ngSwitch]="type">
+    <form *ngSwitchCase="'payPal'" ngNoForm action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+      <input type="hidden" name="custom" [ngModel]="('uid:' + user.uid + ',credit,v2')">
+      <input type="hidden" name="invoice" [ngModel]="nowProdTime">
+      <input type="hidden" name="return" value="https://dashboard.limeproxies.com/#/billing/history?paypal=success">
+      <input type="hidden" name="cancel_return" value="https://dashboard.limeproxies.com/#/billing/history?paypal=cancel">
+      <input type="hidden" name="hosted_button_id" value="ME3Q9LTEFVG4Q">
+      <input type="hidden" name="cmd" value="_s-xclick">
+      <input type="hidden" name="quantity" [ngModel]="(productForm.get('num').value || productForm.get('other_num').value || 0)">
+      <button class="btn btn--full" name="submit" type="submit">MAKE PAYMENT NOW</button>
+    </form>
+
+    <form *ngSwitchCase="'fastSpring'" ngNoForm  method="post"  class="formBox" action="https://sites.fastspring.com/limeproxies/api/order" target="_top">
+        <input type="hidden" name="operation" value="create"/>
+        <input type="hidden" name="destination" value="checkout"/>
+        <input type="hidden" name="referrer" [ngModel]="('uid:' + user.uid + ',credit,v2')">
+        <input type="hidden" name="product_1_path" value="/1credit">
+        <input type="hidden" name="contact_fname" [ngModel]="user.first_name">
+        <input type="hidden" name="contact_lname" [ngModel]="user.last_name">
+        <input type="hidden" name="contact_company" [ngModel]="user.company_name">
+        <input type="hidden" name="contact_email" [ngModel]="user.email">
+        <input type="hidden" name="contact_phone" [ngModel]="user.phone">
+        <input type="hidden" name="product_1_quantity" [ngModel]="(productForm.get('num').value || productForm.get('other_num').value || 0)" size="3" maxlength="5">
+        <button class="btn btn--full" name="submit" type="submit">Make Payment Now</button>
+    </form>
+  </div>
+</div>

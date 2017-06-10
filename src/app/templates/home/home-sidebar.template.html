@@ -1,0 +1,53 @@
+<div class="block block--with-header">
+    <div class="block__header">
+        <h4 class="block__title">Monthly Usage</h4>
+    </div>
+    <div class="block__inner">
+        <div class="usage-stats">
+                <!--
+                To generate chart on backend:
+                - use inline <style> to tweak transform rotate (percentage) amount
+
+                For values UP TO 50%
+                Since rotate will go up to 180deg (50% chart), to get 35% chart
+                360deg * 0.35 = 63
+                apply: transform: rotate(63deg);
+
+                For values OVER 50%,
+                - add "usage-stats__chart--over-50" class to "usage-stats__chart"
+                background: inherit will inherit the gradient as well, so that will
+                fill in the previous 50%. to get 80% chart:
+                360 * 0.8 (80%) - 180 (the other half which is already filled in)
+                = 108
+                apply: transform: rotate(108deg)
+            -->
+            <div class="{{chartClass}}">
+                <div class="usage-stats__chart-bar" [style]="numOfDeg"></div>
+                <span class="usage-stats__chart-text">{{numOfDegreesToShow}}%</span>
+            </div>
+            <div class="usage-stats__legend">
+                <div class="usage-stats__legend-item">
+                    <span class="circle circle--active"></span> Used Quota
+                </div>
+                <div class="usage-stats__legend-item">
+                    <span class="circle"></span> Free Space
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="block block--with-header">
+    <div class="block__header">
+        <h4 class="block__title">Quick Account Overview</h4>
+    </div>
+    <div class="block__inner">
+        <ul class="links-list">
+            <li><a [routerLink]="['/help/',{outlets: {main: ['help-faq'],side:['help-sidebar']}}]" [queryParams]="{id:'s-1'}">Must Read for New Accounts</a></li>
+            <li><a [routerLink]="['/help/']" [queryParams]="{id:'s-2'}">How do I get Proxy IP’S via API?</a></li>
+            <li><a [routerLink]="['/help/']" [queryParams]="{id:'s-3'}">How do I add credits to my account?</a></li>
+            <li><a [routerLink]="['/help/']" [queryParams]="{id:'s-4'}">How to sign up for a free trial?</a></li>
+            <li><a [routerLink]="['/help/']" [queryParams]="{id:'s-5'}">How can I get a free test proxy?</a></li>
+            <li><a [routerLink]="['/help/']" [queryParams]="{id:'s-6'}">How do I add an URL to the White list?</a></li>
+        </ul>
+    </div>
+</div>

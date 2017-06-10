@@ -1,0 +1,227 @@
+<div class="breadcrumbs">
+    <a routerLink="./" class="breadcrumbs__item" routerLinkActive="breadcrumbs__item--active">Add New</a>
+    <span class="separator separator--bullet"></span>
+    <a routerLink="/products/manage" class="breadcrumbs__item" routerLinkActive="breadcrumbs__item--active">Manage</a>
+</div>
+<div *ngIf="!limeProxiesService.products" class="load-comments block page_block_inner">
+    <h4>Loading products...</h4>
+    <div class="loading"></div>
+</div>
+<div *ngIf="limeProxiesService.products" class="block block--with-header page_block_inner">
+    <ul class="block__header tab__nav">
+        <li class="block__title tab__toggle" [ngClass]="{'tab__toggle--active': pageName=='private'}" (click)="openPage('private')">Private Proxies</li>
+        <li class="block__title tab__toggle" [ngClass]="{'tab__toggle--active': pageName=='premium'}" (click)="openPage('premium')">Premium Proxies</li>
+    </ul>
+    <div class="block__inner">
+        <div class="tab__content-wrapper">
+            <form [formGroup]="newProductForm" (submit)="newProduct()" [ngClass]="{'tab__content-block--active': pageName=='private'}" class="tab__content-block">
+                <div class="block-group">
+                    <h4 class="block__title block__title--counter">
+                        <span class="block__title-counter">1</span> Select Proxies Number
+                    </h4>
+                    <div class="toggle-grid">
+                        <label (click)="selectPrivateProxiesNumber(proxy_num)" [ngClass]="{'toggle-grid__item--active': proxy_num === newProductForm.get('proxy_num').value}"  *ngFor="let proxy_num of limeProxiesService.products.private.packages" class="toggle-grid__item toggle-grid__item--small input-field" >
+                            <input type="radio" formControlName="proxy_num" class="hide" [value]="proxy_num">
+                            <span>{{getNumbers(proxy_num.name)[0]}}</span>
+                        </label>
+                        <!--<div class="toggle-grid__item toggle-grid__item&#45;&#45;text" data-reset-selected>
+                            <input type="text" name="pp_proxies_value" formControlName="proxies_value" class="input-field" placeholder="Other">
+                        </div>-->
+                    </div>
+                </div>
+                <div *ngIf="newProductForm.value.proxy_num" class="block-group">
+                    <h4 class="block__title block__title--counter">
+                        <span class="block__title-counter">2</span> Select Server Location
+                    </h4>
+                    <p class="block__desc">You can choose 2 server locations, if you need to select more choose <strong id="linkToPremium" (click)="openPage('premium')">Premium Package</strong>.</p>
+                    <!--<div class="toggle-grid toggle-grid--3-per-row" [data-max-select]="private_locs_max_number">-->
+                    <div class="toggle-grid toggle-grid--3-per-row locations-list" id="2">
+                        <label *ngFor="let prvLoc of limeProxiesService.products.private.locations; let i = index" [ngClass]="{'toggle-grid__item--active':hasLocations(prvLoc)}" class="toggle-grid__item input-field">
+                            <input type="checkbox" (change)="addLocations(prvLoc, $event)" class="hide" [value]='prvLoc'>
+                            <span class="toggle-grid__inner">
+                                <span class="toggle-grid__image">
+                                    <img [src]="getImage(prvLoc.country)">
+                                </span>
+                                <span class="product-country-name">
+                                    <span class="toggle-grid__title">{{prvLoc.state}}</span>
+                                    <span class="toggle-grid__desc">{{limeProxiesService.getFullCountryName(prvLoc.country)}}</span>
+                                </span>
+                            </span>
+                        </label>
+                    </div>
+                </div>
+                <div *ngIf="newProductForm.value.locations && newProductForm.value.locations.length > 0" class="block-group">
+                    <h4 class="block__title block__title--counter">
+                        <span class="block__title-counter">3</span> Select Payment Method
+                    </h4>
+                    <div class="inline-toggle">
+                        <label class="payment-method-button-label" *ngFor="let method of payment_method">
+                            <input type="radio" formControlName="payment_method" [value]="method">
+                            <span (click)="clearPayment()" class="payment-method-button inline-toggle__item">{{method.name}}</span>
+                        </label>
+                    </div>
+                    <div *ngIf="newProductForm.value.payment_method && newProductForm.value.payment_method.value == 'one_time'">
+                        <div *ngIf="availableCredits >= newProductForm.value.proxy_num.price" class="toggle-grid">
+                            <label *ngFor="let paymentType of paymentTypes" [ngClass]="{'toggle-grid__item--active': paymentType == newProductForm.get('payment').value}" class="toggle-grid__item input-field">
+                                <input  formControlName="payment" type="radio" class="hide" [value]="paymentType">
+                                <span class="toggle-grid__inner">
+                                <span class="toggle-grid__image">
+                                    <img [src]="paymentType.img">
+                                </span>
+                                <span>
+                                    <span class="toggle-grid__title">{{paymentType.title}}</span>
+                                </span>
+                            </span>
+                            </label>
+                        </div>
+                        <div *ngIf="availableCredits < newProductForm.value.proxy_num.price" class="toggle-grid">
+                            <label *ngFor="let paymentType of paymentTypesWithCredits" [ngClass]="{'toggle-grid__item--active': paymentType == newProductForm.get('payment').value}" class="toggle-grid__item input-field">
+                                <input  formControlName="payment" type="radio" class="hide" [value]="paymentType">
+                                <span class="toggle-grid__inner">
+                                <span class="toggle-grid__image">
+                                    <img [src]="paymentType.img">
+                                </span>
+                                <span>
+                                    <span class="toggle-grid__title">{{paymentType.title}}</span>
+                                </span>
+                            </span>
+                            </label>
+                        </div>
+                    </div>
+                    <div *ngIf="newProductForm.value.payment_method && newProductForm.value.payment_method.value == 'recurring'" class="toggle-grid">
+                        <label [ngClass]="{'toggle-grid__item--active': newProductForm.value.payment && newProductForm.value.payment.value == 'fastspring'}" class="toggle-grid__item input-field">
+                            <input  formControlName="payment" type="radio" class="hide" [value]="paymentTypes[0]">
+                            <span class="toggle-grid__inner">
+                                <span class="toggle-grid__image">
+                                    <img [src]="paymentTypes[0].img">
+                                </span>
+                                <span>
+                                    <span class="toggle-grid__title">{{paymentTypes[0].title}}</span>
+                                </span>
+                            </span>
+                        </label>
+                    </div>
+                    <!--<div class="block__border-top">-->
+                        <!--<div class="row">-->
+                            <!--<div class="col-xs-12 col-md-12 input-wrapper">-->
+                                <!--<div class="row">-->
+                                    <!--<div class="col-xs-8">-->
+                                        <!--<input type="text" class="input-field" #couponCode (keyup)="0" placeholder="Add a discount code">-->
+                                    <!--</div>-->
+                                    <!--<div class="col-xs-4">-->
+                                      <!--<input type="button" (click)="sendCoupon(couponCode)" class="btn" value="Apply">-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                </div>
+            </form>
+            <form [formGroup]="newProductForm" class="tab__content-block" [ngClass]="{'tab__content-block--active': pageName=='premium'}">
+                <div class="block-group">
+                    <h4 class="block__title block__title--counter">
+                        <span class="block__title-counter">1</span> Select Proxies Number
+                    </h4>
+                    <div class="toggle-grid">
+                         <label (click)="selectPremiumProxiesNumber(proxy_num)" [ngClass]="{'toggle-grid__item--active': proxy_num === newProductForm.get('proxy_num').value}" *ngFor="let proxy_num of limeProxiesService.products.premium.packages" class="toggle-grid__item toggle-grid__item--small input-field">
+                            <input type="radio" formControlName="proxy_num" class="hide" [value]="proxy_num">
+                            <span>{{getNumbers(proxy_num.name)[0]}}</span>
+                        </label>
+                        <!--<div class="toggle-grid__item toggle-grid__item&#45;&#45;text" data-reset-selected>
+                            <input type="text" name="prem_proxies_value" formControlName="proxies_value" class="input-field" placeholder="Other">
+                        </div>-->
+                    </div>
+                </div>
+                <div *ngIf="newProductForm.value.proxy_num" class="block-group">
+                    <h4 class="block__title block__title--counter">
+                        <span class="block__title-counter">2</span> Select Server Location
+                    </h4>
+                    <p class="block__desc">You can choose {{premium_locs_max_number}} server locations, if you need to select more choose another plan.</p>
+                    <!--<div class="toggle-grid toggle-grid--3-per-row" [data-max-select]="premium_locs_max_number">-->
+                    <div class="toggle-grid toggle-grid--3-per-row locations-list" id="{{premium_locs_max_number}}">
+                        <label *ngFor="let premServerLoc of limeProxiesService.products.premium.locations" [ngClass]="{'toggle-grid__item--active':hasLocations(premServerLoc)}" class="toggle-grid__item input-field">
+                            <input type="checkbox" (change)="addLocations(premServerLoc, $event)" class="hide" [value]='premServerLoc'>
+                            <span class="toggle-grid__inner">
+                                <span class="toggle-grid__image">
+                                    <img [src]="getImage(premServerLoc.country)">
+                                </span>
+                                <span class="product-country-name">
+                                    <span class="toggle-grid__title">{{premServerLoc.state}}</span>
+                                    <span class="toggle-grid__desc">{{limeProxiesService.getFullCountryName(premServerLoc.country)}}</span>
+                                </span>
+                            </span>
+                        </label>
+                    </div>
+                </div>
+                <div *ngIf="newProductForm.value.locations && newProductForm.value.locations.length > 0" class="block-group">
+                    <h4 class="block__title block__title--counter">
+                        <span class="block__title-counter">3</span> Select Payment Method
+                    </h4>
+                    <div class="inline-toggle">
+                        <label class="payment-method-button-label" *ngFor="let method of payment_method">
+                            <input type="radio" formControlName="payment_method" [value]="method">
+                            <span (click)="clearPayment()" class="payment-method-button inline-toggle__item">{{method.name}}</span>
+                        </label>
+                    </div>
+                    <div *ngIf="newProductForm.value.payment_method && newProductForm.value.payment_method.value == 'one_time'">
+                        <div *ngIf="availableCredits >= newProductForm.value.proxy_num.price" class="toggle-grid">
+                            <label *ngFor="let paymentType of paymentTypes" [ngClass]="{'toggle-grid__item--active': paymentType == newProductForm.get('payment').value}" class="toggle-grid__item input-field">
+                                <input  formControlName="payment" type="radio" class="hide" [value]="paymentType">
+                                <span class="toggle-grid__inner">
+                                <span class="toggle-grid__image">
+                                    <img [src]="paymentType.img">
+                                </span>
+                                <span>
+                                    <span class="toggle-grid__title">{{paymentType.title}}</span>
+                                </span>
+                            </span>
+                            </label>
+                        </div>
+                        <div *ngIf="availableCredits < newProductForm.value.proxy_num.price" class="toggle-grid">
+                            <label *ngFor="let paymentType of paymentTypesWithCredits" [ngClass]="{'toggle-grid__item--active': paymentType == newProductForm.get('payment').value}" class="toggle-grid__item input-field">
+                                <input  formControlName="payment" type="radio" class="hide" [value]="paymentType">
+                                <span class="toggle-grid__inner">
+                                <span class="toggle-grid__image">
+                                    <img [src]="paymentType.img">
+                                </span>
+                                <span>
+                                    <span class="toggle-grid__title">{{paymentType.title}}</span>
+                                </span>
+                            </span>
+                            </label>
+                        </div>
+                    </div>
+                    <div *ngIf="newProductForm.value.payment_method && newProductForm.value.payment_method.value == 'recurring'" class="toggle-grid">
+                        <label [ngClass]="{'toggle-grid__item--active': newProductForm.value.payment && newProductForm.value.payment.value == 'fastspring'}" class="toggle-grid__item input-field">
+                            <input  formControlName="payment" type="radio" class="hide" [value]="paymentTypes[0]">
+                            <span class="toggle-grid__inner">
+                                <span class="toggle-grid__image">
+                                    <img [src]="paymentTypes[0].img">
+                                </span>
+                                <span>
+                                    <span class="toggle-grid__title">{{paymentTypes[0].title}}</span>
+                                </span>
+                            </span>
+                        </label>
+                    </div>
+                    <!--<div class="block__border-top">-->
+                    <!--<div class="row">-->
+                    <!--<div class="col-xs-6 input-wrapper">-->
+                    <!--<div class="row">-->
+                    <!--<div class="col-xs-8">-->
+                    <!--<input type="text" class="input-field" name="discount" placeholder="Add a discount code">-->
+                    <!--</div>-->
+                    <!--<div class="col-xs-4">-->
+                    <!--<input type="button" class="btn" value="Apply">-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="sidebar big-sidebar"><products-sidebar [productForm]="newProductForm" (clearForm)="clearForm()"></products-sidebar></div>
+

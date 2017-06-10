@@ -1,0 +1,59 @@
+<router-outlet></router-outlet>
+<div class="popup open-ticket">
+    <div class="popup__overlay popup__dismiss"></div>
+    <div class="popup__inner popup__inner--padding">
+        <div class="popup__header">
+            <h4 class="popup__title text-center">Let's solve your problem</h4>
+        </div>
+        {{limeProxiesService.allTickets | json}}
+        <div class="popup__body">
+            <form (submit)="sendTicket()">
+                <div class="input-wrapper">
+                    <select name="ticket_type" class="autocomplete" [(ngModel)]="ticket_type" required>
+                        <option disabled>Ticket type</option>
+                        <option *ngFor="let type of TICKET_TYPES" [ngValue]="type.value">{{type.label}}</option>
+                    </select>
+                </div>
+                <div class="input-wrapper">
+                    <input type="text" [(ngModel)]="ticket_subject" name="ticket_subject" class="input-field" required placeholder="Subject">
+                </div>
+                <div class="input-wrapper">
+                    <textarea name="ticket_subject" [(ngModel)]="ticket_message" rows="8" class="input-field" required placeholder="Message"></textarea>
+                </div>
+                <div class="input-wrapper flex">
+                    <label class="input-field input-field-first input-file">
+                        <input (change)="onChange($event,'input-field-first')" #supportFile type="file" name="ticket_file_first">
+                        <span class="btn btn--gray btn--small">Browse</span>
+                        <span class="label">Attach file (max 5MB)</span>
+                        <span class="input-file__selected"></span>
+                    </label>
+                    <button (click)="addInputField()" type="button" class="field-count-button add-field">+</button>
+                </div>
+                <div *ngIf="second" class="input-wrapper flex">
+                    <label class="input-field input-field-second input-file">
+                        <input (change)="onChange($event,'input-field-second')" #supportFile type="file" name="ticket_file_second">
+                        <span class="btn btn--gray btn--small">Browse</span>
+                        <span class="label">Attach file (max 5MB)</span>
+                        <span class="input-file__selected"></span>
+                    </label>
+                    <button [disabled]="third" (click)="removeInputField()" type="button" class="field-count-button remove-field">-</button>
+                </div>
+                <div *ngIf="third" class="input-wrapper flex">
+                    <label class="input-field input-field-third input-file">
+                        <input (change)="onChange($event,'input-field-third')" #supportFile type="file" name="ticket_file_third">
+                        <span class="btn btn--gray btn--small">Browse</span>
+                        <span class="label">Attach file (max 5MB)</span>
+                        <span class="input-file__selected"></span>
+                    </label>
+                    <button (click)="removeInputField()" type="button" class="field-count-button remove-field">-</button>
+                </div>
+                <div class="input-wrapper">
+                    <button [disabled]="disabled" type="submit" class="btn btn--green btn--full">Send Ticket</button>
+                </div>
+            </form>
+            <div class="text-center">
+                <a href="#" class="popup__dismiss not-now">Not now</a>
+            </div>
+        </div>
+    </div>
+</div>

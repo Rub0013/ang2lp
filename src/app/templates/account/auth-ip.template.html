@@ -1,0 +1,42 @@
+<div class="breadcrumbs">
+    <a [routerLink]="['/account/my-account']" routerLinkActive="breadcrumbs__item--active" class="breadcrumbs__item">My Account</a>
+    <span class="separator separator--bullet"></span>
+    <a *ngIf="user_auth_method == 'user'" [routerLink]="['/account/auth-user']" routerLinkActive="breadcrumbs__item--active" class="breadcrumbs__item">Authorized User</a>
+    <a *ngIf="user_auth_method == 'ip'" [routerLink]="['/account/auth-ip']" routerLinkActive="breadcrumbs__item--active" class="breadcrumbs__item">Authorized IPs</a>
+    <span *ngIf="user_access_type == 'whitelist'" class="separator separator--bullet"></span>
+    <a *ngIf="user_access_type == 'whitelist'" [routerLink]="['/account/user-whitelist']" routerLinkActive="breadcrumbs__item--active" class="breadcrumbs__item">User Whitelist</a>
+</div>
+<form class="block page_block_inner">
+    <h4 class="block__title">Your authorized IPs</h4>
+    <p class="block__desc">Manage your authorized IPs, by adding or deleting them. You can add up to {{numOfAuthFromGet}} authorized IPs.</p>
+    <p class="block__desc">You have {{updatesLeft}} updates left for today.</p>
+    <div class="whitelist-grid">
+        <div class="row">
+            <div class="col-xxs col-xs-6 col-sm-4" *ngFor="let ip of authorizedIPs">
+                <div class="whitelist-grid__item btn" [style.background-color]="ip.currentColor">
+                    <span [attr.title]="ip.key" class="whitelist-grid__label">{{ip.key}}</span>
+                    <button class="btn btn--remove" (click)="removeIp(ip)">
+                        <svg>
+                            <use xlink:href="#close" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div [innerHTML]="errorMessage"></div>
+    <div class="row">
+        <div class="col-xxs col-xs-6 input-wrapper">
+            <input type="text" class="input-field" name="whitelist" placeholder="IP to authorize" [(ngModel)]="ip_address" #ip_addr>
+        </div>
+        <div class="col-xxs col-xs-6 col-lg-4 input-wrapper">
+            <button type="submit" class="btn btn--full" (click)="Add(ip_addr.value)">Add</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xxs col-xs-6 col-lg-4 input-wrapper">
+            <button type="submit" class="btn btn--full {{ifDisabled}}" (click)="authorizeIpAddress()" [disabled]="noUpdatesLeft">Update</button>
+        </div>
+    </div>
+</form>
+<div class="sidebar big-sidebar"><account-sidebar></account-sidebar></div>

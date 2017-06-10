@@ -1,0 +1,37 @@
+<div class="block block--with-header profile-stats">
+    <div class="block__header">
+        <h4 class="block__title">General overview</h4>
+    </div>
+    <div class="block__inner">
+        <ul class="profile-stats__list">
+            <li class="profile-stats__item">
+                <span class="profile-stats__label">Member since</span>
+                <span class="profile-stats__value">{{limeProxiesService.toDate(user_acc.since) | date}}</span>
+            </li>
+            <li class="profile-stats__item">
+                <span class="profile-stats__label">Current Credit</span>
+                <span class="profile-stats__value">${{user_acc.credit}}</span>
+            </li>
+            <li class="profile-stats__item">
+                <span class="profile-stats__label">Auth Method</span>
+                <span class="profile-stats__value">{{user_acc.auth_method}} based</span>
+            </li>
+            <li class="profile-stats__item">
+                <span class="profile-stats__label">Access Type</span>
+                <span class="profile-stats__value">{{access_type}}</span>
+            </li>
+            <li class="profile-stats__item">
+                <span class="profile-stats__label">Monthly Quota</span>
+                <span class="profile-stats__value">{{quota}} {{quota_size}}</span>
+            </li>
+            <li class="profile-stats__item">
+                <span class="profile-stats__label">Concurrent connections</span>
+                <span class="profile-stats__value">{{user_acc.authorized_ips}}</span>
+            </li>
+        </ul>
+    </div>
+</div>
+<!--<custom-popup></custom-popup>-->
+<button type="button" class="btn btn--gray btn--shadow btn--full btn-open-ticket popup-toggle btn-close-account"
+        data-popup-target=".open-ticket" (click)="openConfirm()">Close this Account
+</button>

@@ -1,0 +1,64 @@
+<div class="logo-wrapper">
+    <a [routerLink]="['/home']" class="logo">
+        <svg><use xlink:href="#logo" /></svg>
+    </a>
+    <span class="hamburger">
+        <span class="top"></span>
+        <span class="middle"></span>
+        <span class="bottom"></span>
+    </span>
+</div>
+<div class="page__content-inner header__bar">
+    <div class="header--price">
+        <span class="header__price">${{userNotifications.credit}}</span>
+        <span class="header__price-desc">Available Credit</span>
+    </div>
+    <div class="notify-top-popup">
+    </div>
+    <div class="header__user">
+        <div #notification class="header__user-col dropdown notifications-dropdown" [ngClass]="{'dropdown--show': showNotification}">
+            <div class="tooltips bottom" (click)="showNotification = !showNotification">
+                <svg class="icon icon-notification icon-notification--unread">
+                    <use *ngIf="userNotifications.notifications.length != 0" xlink:href="#notification" />
+                    <use *ngIf="userNotifications.notifications.length == 0" xlink:href="#notificationNone" />
+                </svg>
+                <span class="tooltip">Notifications</span>
+            </div>
+            <div class="dropdown__inner">
+                <ul>
+                    <li *ngFor="let notify of userNotifications.notifications">
+                      <div (click)="openNotification(notify)" class="notifications-box" *ngIf="userNotifications.notifications.length > 0" [ngClass]="{pointer: (!!notify.id || !!notify.link)}" [ngStyle]="getTypeColor(notify.type)" style="color:black;padding:2%;">
+                                {{notify.message}}
+                            <small>{{getDiff(notify.date)}}</small>
+                            <button type="button" class="btn btn--close" (click)="removeNotification(notify, $event)"></button>
+                       </div>
+                    </li>
+                </ul>
+                <div *ngIf="userNotifications.notifications.length == 0" style="padding:2%;text-align:center;">
+                            No new notifications...
+                </div>
+            </div>
+        </div>
+        <a *ngIf="userNotifications.wizard" (click)="limeProxiesService.showQuizPage = true" class="header__user-col tooltips bottom" style="cursor: pointer">
+            <img src="assets/images/wizard.png" style="width: 25px;height: 25px;max-width: none !important">
+            <span class="tooltip">Wizard</span>
+        </a>
+        <a routerLink="/support/" class="header__user-col tooltips bottom">
+            <svg class="icon icon-support"><use xlink:href="#support" /></svg>
+            <span class="tooltip">Support</span>
+        </a>
+        <span class="separator separator--bullet"></span>
+        <div #userDropdown class="dropdown dropdown--right header__user-col user-dropdown" [ngClass]="{'dropdown--show': showProfile}">
+            <span class="dropdown-toggle header__name" (click)="showProfile = !showProfile">
+                Welcome, {{userNotifications.full_name}}
+                <svg class="icon-arrow"><use xlink:href="#arrow" /></svg>
+            </span>
+            <div class="dropdown__inner">
+                <ul>
+                    <li><a routerLink="/profile" (click)="this.showProfile = false">My Profile</a></li>
+                    <li><a routerLink="/login">Sign Out</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

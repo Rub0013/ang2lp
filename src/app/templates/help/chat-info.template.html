@@ -1,0 +1,6 @@
+    <a [routerLink]="['/support/','tickets']" class="block__header btn-back">Go Back</a>
+    <div class="block__inner">
+        <h3 class="block__title">{{ ticket.subject }}</h3>
+        <p class="block__desc">{{ ticket.description }}</p>
+    </div>
+    <button (click)="close(ticket)" *ngIf="buttonShow" class="btn btn--dark-gray btn-close-chat">Close Ticket</button>

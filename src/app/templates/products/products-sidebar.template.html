@@ -1,0 +1,87 @@
+    <div class="block block--with-header profile-stats">
+        <div class="block__header">
+            <h4 class="block__title">Order review</h4>
+        </div>
+        <div class="block__inner">
+            <ul class="profile-stats__list">
+                <li class="profile-stats__item">
+                    <span class="profile-stats__label">Private Proxies</span>
+                    <span class="profile-stats__value">{{getNumbers(productForm?.value?.proxy_num?.name)[0] || 0}}</span>
+                </li>
+                <li class="profile-stats__item">
+                    <span class="profile-stats__label">
+                        <span> Server Locations</span>
+                        <small>{{showLocations}}</small>
+                    </span>
+                    <span class="profile-stats__value">{{productForm?.value?.proxies_value || productForm?.value?.proxy_num?.locations || 0}}</span>
+                </li>
+                <li class="profile-stats__item">
+                    <span class="profile-stats__label">
+                        <span>Payment Method</span>
+                        <small>{{productForm?.value?.payment?.title}}</small>
+                    </span>
+                    <span class="profile-stats__value"><img *ngIf="productForm.value.payment" class="payment-icon" [src]="productForm.value.payment.img" alt="Paypal"></span>
+                </li>
+                <li class="profile-stats__item">
+                    <span class="profile-stats__label">
+                        <span>Total</span>
+                    </span>
+                    <span class="profile-stats__value">{{productForm?.value?.proxy_num?.price | currency:'USD':true}}</span>
+                </li>
+            </ul>
+            <div class="block__border-top" [ngSwitch]="productForm?.value?.payment?.value">
+                <form *ngSwitchCase="'paypal'" ngNoForm action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                    <input type="hidden" name="custom" [ngModel]="(productInvoice ? 'uid:' + userInfo.uid + ',oid:' + productInvoice + ',v2' : null)">
+                    <input type="hidden" name="invoice" [ngModel]="nowProdTime">
+                    <input type="hidden" name="return" value="https://dashboard.limeproxies.com/#/billing/history?paypal=success">
+                    <input type="hidden" name="cancel_return" value="https://dashboard.limeproxies.com/#/billing/history?paypal=cancel">
+                    <input type="hidden" name="hosted_button_id" value="ME3Q9LTEFVG4Q">
+                    <input type="hidden" name="cmd" value="_s-xclick">
+                    <input *ngIf="productForm.value.proxy_num" type="hidden" name="quantity" [ngModel]="(productForm.value.proxy_num.price ? productForm?.value?.proxy_num?.price : 0)">
+                    <button id="paypalForm" (click)="newProduct($event,'paypalForm')" [disabled]="!productForm.valid" class="btn btn--full" name="submit" type="submit">Buy new product</button>
+                </form>
+
+                <form *ngSwitchCase="'fastspring'" ngNoForm  method="post"  class="formBox" action="https://sites.fastspring.com/limeproxies/api/order" target="_top">
+                    <input type="hidden" name="operation" value="create"/>
+                    <input type="hidden" name="destination" value="checkout"/>
+                    <input type="hidden" name="referrer" [ngModel]="(productInvoice ? 'uid:' + userInfo.uid + ',oid:' + productInvoice + ',v2' : null)">
+                    <input type="hidden" name="product_1_path" value="{{productPath()}}">
+                    <input type="hidden" name="contact_fname" [ngModel]="userInfo.first_name">
+                    <input type="hidden" name="contact_lname" [ngModel]="userInfo.last_name">
+                    <input type="hidden" name="contact_company" [ngModel]="userInfo.company_name">
+                    <input type="hidden" name="contact_email" [ngModel]="userInfo.email">
+                    <input type="hidden" name="contact_phone" [ngModel]="userInfo.phone">
+                    <input *ngIf="productForm.value.proxy_num" type="hidden" name="product_1_quantity" [ngModel]="(productForm.value.proxy_num.price ? productForm?.value?.proxy_num?.price : 0)" size="3" maxlength="5">
+                    <button id="fastspringForm" (click)="newProduct($event,'fastspringForm')" [disabled]="!productForm.valid" class="btn btn--full" name="submit" type="submit">Buy new product</button>
+                </form>
+
+                <div *ngSwitchCase="'credit'">
+                    <button id="creditsForm" (click)="newCreditProduct()" [disabled]="!productForm.valid" class="btn btn--full">Buy new product</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button type="button" class="btn btn--big btn--full btn--dark-gray btn--shadow" (click)="clearForm.emit()">Clear</button>
+
+    <div id="fastspring"  class="modal-overlay">
+        <div class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">FastSpring</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-txt">
+                        <form (submit)="doPayment()" #form="ngForm" class="formBox" method="POST" target="_blank">
+                            <input type="number" name="product_1_quantity" [(ngModel)]="count" size="3" maxlength="5"> <b>&#36;</b><br><br>
+                            <input type="submit" value="Get Credits" class="btn btn--full"/>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a (click)="reject()" style="width: 100%" class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+            </div>
+        </div>
+    </div>
+
+

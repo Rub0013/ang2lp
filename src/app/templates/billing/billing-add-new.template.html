@@ -1,0 +1,53 @@
+<div class="breadcrumbs">
+    <a [routerLink]="['/billing/new']" class="breadcrumbs__item" routerLinkActive="breadcrumbs__item--active">Add</a>
+    <span class="separator separator--bullet"></span>
+    <a [routerLink]="['/billing/history']" class="breadcrumbs__item" routerLinkActive="breadcrumbs__item--active">History</a>
+</div>
+<div class="block block--with-header page_block_inner">
+    <ul class="block__header tab__nav">
+        <li #liPayment id="fastspring" class="block__title tab__toggle" [ngClass]="{'tab__toggle--active': type == 'fastSpring'}" (click)="type = 'fastSpring'; text = 'Fast Spring';">Fast Spring</li>
+        <li #liPayment id="paypal" class="block__title tab__toggle" [ngClass]="{'tab__toggle--active': type == 'payPal'}" (click)="type = 'payPal'; text = 'PayPal';">PayPal</li>
+        <li #liPayment id="bitcoin" class="block__title tab__toggle" [ngClass]="{'tab__toggle--active': type == 'bitCoin'}" (click)="type = 'bitCoin'; text = 'BitCoin';">BitCoin</li>
+    </ul>
+    <div class="block__inner">
+        <div class="tab__content-wrapper">
+            <form [formGroup]="fastSpringForm" class="tab__content-block tab__content-block--active">
+                <h4 class="block__title">Make a payment with {{text || 'Fast Spring'}}</h4>
+                <p class="block__desc">
+                    This is a one-time payment that will not recur. Payment may take up to 5 minutes to process. <br>
+                </p>
+                <div class="toggle-grid">
+                    <label [ngClass]="{'toggle-grid__item--active': num === fastSpringForm.get('num').value}"  *ngFor="let num of [5,10,25,50,100,250]" class="toggle-grid__item toggle-grid__item--small input-field" >
+                        <input type="radio" formControlName="num" class="hide" [value]="num">
+                        <span>${{num}}</span>
+                    </label>
+                    <div (click)="fastSpringForm.get('num').patchValue(null)" class="toggle-grid__item toggle-grid__item--text" data-reset-selected>
+                        <input type="text" name="ft_credit_value" (keypress)="limeProxiesService._keyPress($event)" formControlName="other_num" class="input-field" placeholder="Other credit value">
+                    </div>
+                </div>
+                <!--<div class="row middle-xs terms-box">-->
+                    <!--<div class="text-left col-xs-12 col-lg-6 col-md-6 col-sm-6 input-wrapper">-->
+                        <!--<label class="input-checkbox">-->
+                            <!--<input formControlName="tos" type="checkbox" id="ft_terms" name="ft_terms" value="1">-->
+                            <!--<span class="checkbox"></span>-->
+                            <!--<span class="label">I agree to <a target="_blank" href="http://limeproxies.com/terms.php">Terms of service</a></span>-->
+                        <!--</label>-->
+                    <!--</div>-->
+                    <!--<div class="col-xs-12 col-lg-6 col-md-6 col-sm-6 input-wrapper">-->
+                        <!--<div class="row">-->
+                            <!--<div class="billing_new_add_discount col-xs-12 col-lg-8 col-md-8 col-sm-8">-->
+                                <!--<input type="text" class="input-field" name="discount" placeholder="Add a discount code">-->
+                            <!--</div>-->
+                            <!--<div class="text-left col-xs-12 col-lg-4 col-md-4 col-sm-4">-->
+                                <!--<button class="btn">Apply</button>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            </form>
+          <img src="assets/images/feature_payment-method-and-security_credit-debit-cards.png" *ngIf="type == 'fastSpring'">
+        </div>
+    </div>
+</div>
+<div class="sidebar big-sidebar"><add-new-sidebar [type]="type" [productForm]="fastSpringForm"></add-new-sidebar></div>
+<!--<card-payment [type]="type" [productForm]="fastSpringForm"></card-payment>-->

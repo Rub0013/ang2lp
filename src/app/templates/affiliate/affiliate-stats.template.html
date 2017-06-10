@@ -1,0 +1,118 @@
+<div class="breadcrumbs">
+    <a [routerLink]="['/affiliate/',{outlets: {main: ['referral'],side:['referral-sidebar']}}]" class="breadcrumbs__item" routerLinkActive="breadcrumbs__item--active">Referral</a>
+    <span class="separator separator--bullet"></span>
+    <a [routerLink]="['/affiliate/',{outlets: {main: ['stats'],side:null}}]" class="breadcrumbs__item" routerLinkActive="breadcrumbs__item--active">Stats</a>
+    <span class="separator separator--bullet"></span>
+    <a [routerLink]="['/affiliate/',{outlets: {main: ['payouts'],side:['payouts-sidebar']}}]" class="breadcrumbs__item" routerLinkActive="breadcrumbs__item--active">Payouts</a>
+</div>
+<div class="block affiliate-chart">
+    <div class="affiliate-chart__header">
+        <div class="affiliate-chart__dates">
+            <span>
+                July
+                <svg class="icon-arrow">
+                    <use xlink:href="#arrow" />
+                </svg>
+            </span>
+            <span>
+                2016
+                <svg class="icon-arrow">
+                    <use xlink:href="#arrow" />
+                </svg>
+            </span>
+        </div>
+        <div class="affiliate-chart__legend">
+            <span class="affiliate-chart__item">
+                <span></span> Clicks
+            </span>
+            <span class="affiliate-chart__item">
+                <span></span> Signups
+            </span>
+        </div>
+        <div class="affiliate-chart__nav">
+            <a href="#">
+                <svg class="icon-arrow icon-arrow--left">
+                    <use xlink:href="#arrow" />
+                </svg>
+                Previous
+            </a>
+            <a href="#">
+                Next
+                <svg class="icon-arrow icon-arrow--right">
+                    <use xlink:href="#arrow" />
+                </svg>
+            </a>
+        </div>
+    </div>
+    <div class="affiliate-chart__days">
+        <div class="affiliate-chart__day">
+            <span class="affiliate-chart__day-label">01 July</span>
+            <div class="affiliate-chart__bars">
+                <span class="affiliate-chart__bar affiliate-chart__bar--red" style="height: 60%"></span>
+                <span class="affiliate-chart__bar affiliate-chart__bar--green" style="height: 40%"></span>
+            </div>
+        </div>
+        <div class="affiliate-chart__day">
+            <span class="affiliate-chart__day-label">02 July</span>
+            <div class="affiliate-chart__bars">
+                <span class="affiliate-chart__bar affiliate-chart__bar--red" style="height: 73%"></span>
+                <span class="affiliate-chart__bar affiliate-chart__bar--green" style="height: 52%"></span>
+            </div>
+        </div>
+        <div class="affiliate-chart__day">
+            <span class="affiliate-chart__day-label">03 July</span>
+            <div class="affiliate-chart__bars">
+                <span class="affiliate-chart__bar affiliate-chart__bar--red" style="height: 43%"></span>
+                <span class="affiliate-chart__bar affiliate-chart__bar--green" style="height: 35%"></span>
+            </div>
+        </div>
+        <div class="affiliate-chart__day">
+            <span class="affiliate-chart__day-label">04 July</span>
+            <div class="affiliate-chart__bars">
+                <span class="affiliate-chart__bar affiliate-chart__bar--red" style="height: 0%"></span>
+                <span class="affiliate-chart__bar affiliate-chart__bar--green" style="height: 0%"></span>
+            </div>
+        </div>
+        <div class="affiliate-chart__day">
+            <span class="affiliate-chart__day-label">05 July</span>
+            <div class="affiliate-chart__bars">
+                <span class="affiliate-chart__bar affiliate-chart__bar--red" style="height: 0%"></span>
+                <span class="affiliate-chart__bar affiliate-chart__bar--green" style="height: 0%"></span>
+            </div>
+        </div>
+        <div class="affiliate-chart__day">
+            <span class="affiliate-chart__day-label">06 July</span>
+            <div class="affiliate-chart__bars">
+                <span class="affiliate-chart__bar affiliate-chart__bar--red" style="height: 0%"></span>
+                <span class="affiliate-chart__bar affiliate-chart__bar--green" style="height: 0%"></span>
+            </div>
+        </div>
+        <div class="affiliate-chart__day">
+            <span class="affiliate-chart__day-label">07 July</span>
+            <div class="affiliate-chart__bars">
+                <span class="affiliate-chart__bar affiliate-chart__bar--red" style="height: 0%"></span>
+                <span class="affiliate-chart__bar affiliate-chart__bar--green" style="height: 0%"></span>
+            </div>
+        </div>
+    </div>
+</div>
+<table class="block table">
+    <thead class="table__header table__header--small">
+        <tr>
+            <td class="table__cell">Campaign</td>
+            <td class="table__cell">Signup Date </td>
+            <td class="table__cell">Type</td>
+            <td class="table__cell">Status</td>
+            <td class="table__cell">Funded</td>
+            <td class="table__cell">$10 Used</td>
+            <td class="table__cell">Commission</td>
+        </tr>
+    </thead>
+    <tbody class="table__body">
+        <tr>
+            <td class="table__cell" colspan="7">
+                <h4 class="block__title">No Signups for July</h4>
+            </td>
+        </tr>
+    </tbody>
+</table>

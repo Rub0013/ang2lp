@@ -1,0 +1,93 @@
+<div class="breadcrumbs">
+    <a routerLink="/products/new" class="breadcrumbs__item" routerLinkActive="breadcrumbs__item--active">Add New</a>
+    <span class="separator separator--bullet"></span>
+    <a routerLink="./" class="breadcrumbs__item" routerLinkActive="breadcrumbs__item--active">Manage</a>
+</div>
+<form action="#" method="post">
+    <table class="block table table-responsive products-manage">
+        <thead class="table__header table__header--small">
+            <tr>
+                <th class="table__cell">Order #</th>
+                <th class="table__cell">Product Name</th>
+                <th class="table__cell">Cost</th>
+                <th class="table__cell">Proxy Number</th>
+                <th class="table__cell">Expiry Date</th>
+                <th class="table__cell">Socks</th>
+                <th class="table__cell table__cell--fit">Manage</th>
+            </tr>
+        </thead>
+        <tbody class="table__body">
+        <template ngFor let-item [ngForOf]="products" let-i="index">
+            <tr>
+                <td class="table__cell">{{item.id}}</td>
+                <td class="table__cell">{{item.product}}</td>
+                <td class="table__cell">${{item.cost}}</td>
+                <td class="table__cell">{{item.no}}</td>
+                <td class="table__cell">{{item.expiry | date}}</td>
+                <td class="table__cell">
+                    <div (click)="switchSocks(item)" class="switch-toggle" [ngClass]="{'switch-toggle--on': item.socks}">
+                        <label class="switch-toggle__item">
+                            <span class="switch-toggle__label">On</span>
+                        </label>
+                        <label class="switch-toggle__item">
+                            <span class="switch-toggle__label">Off</span>
+                        </label>
+                        <span class="switch-toggle__control"></span>
+                    </div>
+                </td>
+                <td class="table__cell table__cell--fit">
+                    <button type="button" class="btn btn--small btn--red" *ngIf="configPage == item.id" (click)="configPage = 0">Close</button>
+                    <button type="button" class="btn btn--small" *ngIf="configPage != item.id" (click)="configPage = item.id">Configure</button>
+                    <button (click)="downloadProduct(item.id)" type="button" class="btn btn--small btn--dark-gray">Download</button>
+                </td>
+            </tr>
+            <tr class="product-info" style="display: none" [@showConfig]="configPage == item.id">
+                <td class="table__cell">
+                    <p class="col__desc">Auto Renewal</p>
+                    <div (click)="switchRenewal(item)" class="switch-toggle" [ngClass]="{'switch-toggle--on': item.auto}">
+                        <label class="switch-toggle__item">
+                            <span class="switch-toggle__label">On</span>
+                        </label>
+                        <label class="switch-toggle__item">
+                            <span class="switch-toggle__label">Off</span>
+                        </label>
+                        <span class="switch-toggle__control"></span>
+                    </div>
+                </td>
+                <td class="table__cell" colspan="6">
+                    <p class="col__desc">Options</p>
+                    <div class="row">
+                        <div class="col-xs-8">
+                            <button type="button" class="btn btn--small btn--dark-gray btn--action popup-toggle" (click)="ckeckStatus(item.id)">Check status</button>
+                            <button type="button" *ngIf="item.refresh" class="btn btn--small btn--dark-gray btn--action" (click)="showRefresh(item.id)">Refresh</button>
+                            <button type="button" *ngIf="!item.auto" class="btn btn--small btn--dark-gray btn--action" (click)="showRenew(item.id)">Renew</button>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </template>
+        <!--{{products}}-->
+        <tr *ngIf="noProducts" class="text-center no-products">
+            <td class="table__cell" colspan="6">no active products, click <a [routerLink]="['/products/new']">here</a> to add one</td>
+        </tr>
+        </tbody>
+    </table>
+</form>
+<div *ngIf="_refresh.show" [style.display]="_refresh.show?'block':none" class="modal-overlay display">
+    <div class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Please provide the reason for refresh request</h4>
+            </div>
+            <div class="modal-body">
+                <div class="modal-txt"><textarea [(ngModel)]="_refresh.text" style="height: 200px;" class="form-control"></textarea>
+                  <div class="alert alert-danger" *ngIf="_refresh.text.length > 250">Max length is 250 characters </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a (click)="closeRefresh()" style="width: 50%" class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+            <a (click)="refreshProduct()" style="width: 50%" class="modal-action modal-close waves-effect waves-green btn-flat">Request</a>
+        </div>
+    </div>
+</div>

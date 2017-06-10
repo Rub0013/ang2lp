@@ -1,0 +1,134 @@
+{
+  "private": {
+    "locations": [
+      {
+        "country":"DE"
+      },
+      {
+        "country":"US",
+        "state":"Berkeley (CA)"
+      },
+      {
+        "country":"US",
+        "state":"Dublin (CA)"
+      },
+      {
+        "country":"US",
+        "state":"Long Beach (CA)"
+      },
+      {
+        "country":"US",
+        "state":"Miami (FL)"
+      },
+      {
+        "country":"US",
+        "state":"San Jose (CA)"
+      }
+    ],
+    "packages": [
+      {
+        "name":"1 Private Proxy",
+        "price":5,
+        "locations":2
+      },
+      {
+        "name":"10 Private Proxies",
+        "price":10,
+        "locations":2
+      },
+      {
+        "name":"25 Private Proxies",
+        "price":25,
+        "locations":2
+      },
+      {
+        "name":"100 Private Proxies",
+        "price":100,
+        "locations":2
+      },
+      {
+        "name":"250 Private Proxies",
+        "price":250,
+        "locations":2
+      },
+      {
+        "name":"500 Private Proxies",
+        "price":499,
+        "locations":2
+      },
+      {
+        "name":"1000 Private Proxies",
+        "price":750,
+        "locations":2
+      },
+      {
+        "name":"2500 Private Proxies",
+        "price":1750,
+        "locations":2
+      }
+    ]
+  },
+  "premium": {
+    "locations": [
+      {"country":"AT"},
+      {"country":"AU"},
+      {"country":"BE"},
+      {"country":"BR"},
+      {"country":"CA"},
+      {"country":"DE"},
+      {"country":"DK"},
+      {"country":"ES"},
+      {"country":"FR"},
+      {"country":"GB"},
+      {"country":"HK"},
+      {"country":"IE"},
+      {"country":"IN"},
+      {"country":"IT"},
+      {"country":"JP"},
+      {"country":"KR"},
+      {"country":"NL"},
+      {"country":"NO"},
+      {"country":"PL"},
+      {"country":"PT"},
+      {"country":"SG"},
+      {"country":"US","state":"Athens (GA)"},
+      {"country":"US","state":"Atlanta (GA)"},
+      {"country":"US","state":"Boise (ID)"},
+      {"country":"US","state":"Buffalo (NY)"},
+      {"country":"US","state":"Charleston (SC)"},
+      {"country":"US","state":"Davenport (IA)"},
+      {"country":"US","state":"Denver (CO)"},
+      {"country":"US","state":"Dover (DE)"},
+      {"country":"US","state":"Fresno (CA)"},
+      {"country":"US","state":"Hartford (CT)"},
+      {"country":"US","state":"Huntington Station (NY)"},
+      {"country":"US","state":"Indianapolis (IN)"},
+      {"country":"US","state":"Jacksonville (FL)"},
+      {"country":"US","state":"Newark (NJ)"},
+      {"country":"US","state":"Oakland (CA)"},
+      {"country":"US","state":"Orlando (FL)"},
+      {"country":"US","state":"Portland (OR)"},
+      {"country":"US","state":"Rowland Heights (CA)"},
+      {"country":"US","state":"San Jose (CA)"},
+      {"country":"US","state":"Springfield (IL)"},
+      {"country":"US","state":"Tallahassee (FL)"},
+      {"country":"US","state":"Tucson (AZ)"},
+      {"country":"US","state":"Wichita (KS)"},
+      {"country":"ZA"}
+    ],
+    "packages": [
+      {
+        "name":"1 Premium Private Proxy",
+        "price":5,
+        "locations":1
+      },
+      {"name":"10 Premium Private Proxies","price":50,"locations":8},
+      {"name":"25 Premium Private Proxies","price":100,"locations":8},
+      {"name":"50 Premium Private Proxies","price":150,"locations":8},
+      {"name":"100 Premium Private Proxies","price":300,"locations":8},
+      {"name":"250 Premium Private Proxies","price":600,"locations":10},
+      {"name":"500 Premium Private Proxies","price":1000,"locations":10},
+      {"name":"1000 Premium Private Proxies","price":1500,"locations":10}
+    ]
+  }
+}

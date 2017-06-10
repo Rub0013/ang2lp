@@ -1,0 +1,69 @@
+<div class="notify-top-popup">
+</div>
+            <svg class="logo">
+                <use xlink:href="#logo"></use>
+            </svg>
+
+<div class="block">
+    <h4 class="page-title">Let’s create your account</h4>
+
+    <div class="form-wrapper">
+        <form  [formGroup]="signUpForm">
+            <div class="input-wrapper">
+                <input type="text" class="form-control input-field" name="first_name" placeholder="First Name" [formControl]="signUpForm.controls['first_name']">
+                <div *ngIf="signUpForm.controls['first_name'].hasError('required') && signUpForm.controls['first_name'].touched" class="alert alert-danger">First Name is required</div>
+            </div>
+            <div class="input-wrapper">
+                <input type="text" class="form-control input-field" name="last_name" placeholder="Last Name" [formControl]="signUpForm.controls['last_name']">
+                <div *ngIf="signUpForm.controls['last_name'].hasError('required') && signUpForm.controls['last_name'].touched" class="alert alert-danger">Last Name is required</div>
+            </div>
+            <div class="input-wrapper">
+                <input type="email" class="form-control input-field" name="email" placeholder="Email" [formControl]="signUpForm.controls['email']">
+                <div *ngIf="signUpForm.controls['email'].hasError('required') && signUpForm.controls['email'].touched" class="alert alert-danger">Email Address is required</div>
+                <div *ngIf="!signUpForm.controls['email'].hasError('required') && signUpForm.controls['email'].hasError('validateEmail') && signUpForm.controls['email'].touched && signUpForm.controls['email'].dirty" class="alert alert-danger">Email Address is in invalid format</div>
+            </div>
+            <div class="input-wrapper">
+                <button type="submit" class="btn {{signUpForm.valid==true?'btn--green':'btn--gray'}} btn--full step__next" [disabled]="!signUpForm.valid" (click)="sendValidationLinkToEmail()">SIGNUP</button>
+            </div>
+        </form>
+        <!--<form *ngIf="stepId==2">
+            <div class="input-wrapper">
+                <select [ngModelOptions]="{standalone: true}" name="profile_country" class="input-field autocomplete" [(ngModel)]="signUpData.country" (change)="selectCountry($event.target.value)">
+                     <option [ngValue]='country.value' *ngFor="let country of countries" [disabled]="country.value==''?true:false">{{country.display}}</option>
+                </select>
+            </div>
+            <div class="input-wrapper">
+                <input type="text" class="input-field" name="new_city" [(ngModel)]="signUpData.city" placeholder="City">
+            </div>
+            <div class="input-wrapper">
+                <input type="text" class="input-field" name="new_zip" [(ngModel)]="signUpData.zipCode" placeholder="Zip Code">
+            </div>
+            <div class="input-wrapper">
+                <textarea class="input-field" name="new_address" rows="8" [(ngModel)]="signUpData.address" placeholder="Address"></textarea>
+            </div>
+            <div class="input-wrapper">
+                <button type="submit" class="btn btn--green btn--full step__next" (click)="goNext()">Next</button>
+            </div>
+        </form>
+         <form *ngIf="stepId==3">
+                <div class="input-wrapper">
+                    <input type="text" class="input-field" name="new_phone" [(ngModel)]="signUpData.phone" required placeholder="Phone Number">
+                </div>
+                <div class="input-wrapper">
+                    <input type="password" class="input-field" name="new_password" [(ngModel)]="signUpData.password" required placeholder="Password">
+                </div>
+            <div class="input-wrapper">
+                <button type="submit" class="btn btn--green btn--full" (click)=updateProfileInfo()>Finish</button>
+            </div>
+        </form>-->
+    </div>
+    <a [routerLink]="['/login']" class="forgot-password">Login</a>
+</div>
+<!--<a href="#" class="btn btn--shadow btn-cta step__prev">
+    <div class="step__progress">
+        <span class="bubble {{stepId==1 ? 'bubble--active' : false}}"></span>
+        <span class="bubble"></span>
+        <span class="bubble {{stepId==2 ? 'bubble--active' : false}}"></span>
+        <span class="bubble {{stepId==3 ? 'bubble--active' : false}}"></span>
+    </div>
+</a>-->

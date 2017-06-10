@@ -1,0 +1,108 @@
+<div class="breadcrumbs">
+    <a [routerLink]="['/profile/']" class="breadcrumbs__item" routerLinkActive="breadcrumbs__item--active">My Profile</a>
+</div>
+
+<form class="block" [formGroup]="profileForm">
+    <h4 class="block__title">Your profile details</h4>
+    <h4 class="block__desc" style="color:green;">{{successMessage}}</h4>
+    <h4 class="block__desc" style="color:red;">{{errorMessage}}</h4>
+    <p class="block__desc">Change your profile  details, by clicking directly in the field you want to update.</p>
+
+    <div class="row">
+        <div class="col-xs-6 input-wrapper" [ngClass]="{'has-error':!profileForm.controls['firstName'].valid && profileForm.controls['firstName'].touched}">
+            <input type="text" class="input-field" name="profile_fname" placeholder="First name" [(ngModel)]="userProfile.first_name" [formControl]="profileForm.controls['firstName']">
+              <!-- The hasError method will tell us if a particular error exists -->
+            <div *ngIf="profileForm.controls['firstName'].hasError('required') && profileForm.controls['firstName'].touched" class="alert alert-danger">First Name is required</div>
+            <div *ngIf="profileForm.controls['firstName'].hasError('maxlength') && profileForm.controls['firstName'].touched" class="alert alert-danger">Length must be less than 50</div>
+        </div>
+        <div class="col-xs-6 input-wrapper">
+            <input type="text" class="input-field" name="profile_lname" placeholder="Last name" [(ngModel)]="userProfile.last_name" [formControl]="profileForm.controls['lastName']">
+            <div *ngIf="profileForm.controls['lastName'].hasError('required') && profileForm.controls['lastName'].touched" class="alert alert-danger">Last Name is required</div>
+            <div *ngIf="profileForm.controls['lastName'].hasError('maxlength') && profileForm.controls['lastName'].touched" class="alert alert-danger">Length must be less than 50</div>
+        </div>
+    </div>
+   <div class="row">
+        <div class="col-xs-6 input-wrapper">
+             <select [ngModelOptions]="{standalone: true}" name="profile_country" class="input-field autocomplete" [(ngModel)]="selected_country" (change)="selectCountry($event)">
+                 <option [ngValue]='country.name' [attr.code]="country.code" *ngFor="let country of limeProxiesService.countryWithPhone">{{country.name}} ({{country.code}})</option>
+            </select>
+        </div>
+        <div class="col-xs-6">
+            <div class="row">
+                <div class="col-xs-7 input-wrapper">
+                    <input type="text" class="input-field" name="profile_city" [(ngModel)]="userProfile.city" placeholder="City" [formControl]="profileForm.controls['city']">
+                    <div *ngIf="profileForm.controls['city'].hasError('maxlength') && profileForm.controls['city'].touched" class="alert alert-danger">Length must be less than 50</div>
+                </div>
+                <div class="col-xs-5 input-wrapper">
+                    <input type="text" class="input-field" name="profile_zip" [(ngModel)]="userProfile.zip" placeholder="ZIP Code" [formControl]="profileForm.controls['zipCode']">
+                    <div *ngIf="profileForm.controls['zipCode'].hasError('maxlength') && profileForm.controls['zipCode'].touched" class="alert alert-danger">Length must be less than 50</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 input-wrapper">
+            <input type="text" class="input-field" name="profile_address" placeholder="Address" [(ngModel)]="userProfile.address" [formControl]="profileForm.controls['address']">
+             <div *ngIf="profileForm.controls['address'].hasError('maxlength') && profileForm.controls['address'].touched" class="alert alert-danger">Length must be less than 50</div>
+    </div>
+   </div>
+     <div class="row">
+         <div class="col-xs-6 input-wrapper">
+             <input placeholder="Phone country prefix" name="code" class="input-field autocomplete" [(ngModel)]="phone_cc" [formControl]="profileForm.controls['phone_cc']">
+         </div>
+        <div class="col-xs-6 input-wrapper">
+            <input type="text" class="input-field" name="profile_phone" (keypress)="limeProxiesService._keyPress($event)" placeholder="Phone number" [(ngModel)]="userProfile.phone" [formControl]="profileForm.controls['phone']">
+            <div *ngIf="profileForm.controls['phone'].hasError('required') && profileForm.controls['phone'].touched" class="alert alert-danger">Phone is required</div>
+            <div *ngIf="profileForm.controls['phone'].hasError('validatePhone') && profileForm.controls['phone'].touched" class="alert alert-danger">Phone is in invalid format.</div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-6 input-wrapper">
+            <input type="text" class="input-field" name="profile_company" placeholder="Company name" [(ngModel)]="userProfile.company_name" [formControl]="profileForm.controls['companyName']">
+             <div *ngIf="profileForm.controls['companyName'].hasError('maxlength') && profileForm.controls['companyName'].touched" class="alert alert-danger">Length must be less than 50</div>
+        </div>
+        <div class="col-xs-6 input-wrapper">
+            <input type="text" class="input-field" name="profile_company_number" placeholder="Company number" [(ngModel)]="userProfile.company_number" [formControl]="profileForm.controls['companyNumber']">
+             <div *ngIf="profileForm.controls['companyNumber'].hasError('maxlength') && profileForm.controls['companyNumber'].touched" class="alert alert-danger">Length must be less than 50</div>
+        </div>
+    </div>
+    <div class="row end-xs">
+        <div class="col-xs-6 input-wrapper">
+            <button type="submit" class="btn btn--full" (click)="sendSMSCode()" [disabled]="userProfile.verified || !phone_cc || !profileForm.get('phone').valid" [ngClass]="{'btn--gray': (userProfile.verified || !phone_cc || !userProfile.phone)}">Re-send SMS</button>
+        </div>
+        <div class="col-xs-6 input-wrapper">
+            <button type="submit" class="btn btn--full" (click)="updateUserProfile()" [disabled]="!profileForm.valid || !selected_country" [ngClass]="{'btn--gray': (!profileForm.valid || !selected_country)}">Update Profile</button>
+        </div>
+    </div>
+</form>
+<form class="block" [formGroup]="passwordForm">
+      <div class="row">
+        <div class="col-xs-6 input-wrapper">
+            <input type="password" class="input-field" name="profile_password" placeholder="New Password" [(ngModel)]="newPassword" [formControl]="passwordForm.controls['newPassword']">
+             <div *ngIf="passwordForm.controls['newPassword'].hasError('maxlength') && passwordForm.controls['newPassword'].touched" class="alert alert-danger">Length must be less than 50</div>
+             <div *ngIf="passwordForm.controls['newPassword'].hasError('minlength') && passwordForm.controls['newPassword'].touched" class="alert alert-danger">Minimum password length is 8 characters</div>
+        </div>
+        <div class="col-xs-6 input-wrapper">
+            <input type="password" class="input-field" name="profile_password_confirmation" placeholder="Confirm Password" [(ngModel)]="confirmPassword" [formControl]="passwordForm.controls['confirmPassword']">
+             <div *ngIf="passwordForm.controls['confirmPassword'].hasError('maxlength') && passwordForm.controls['confirmPassword'].touched" class="alert alert-danger">Length must be less than 50</div>
+        <div *ngIf="passwordForm.controls['confirmPassword'].hasError('minlength') && passwordForm.controls['confirmPassword'].touched" class="alert alert-danger">Minimum password length is 8 characters</div>
+        </div>
+    </div>
+    <div class="row end-xs">
+        <div class="col-xs-6 input-wrapper">
+                <button type="submit" class="btn btn--full" (click)="updatePassword()" [disabled]="!passwordForm.valid" [ngClass]="{'btn--gray': !passwordForm.valid}">Update Password</button>
+        </div>
+    </div>
+</form>
+<form class="block" [formGroup]="emailForm">
+    <div class="row">
+        <div class="col-xs-12 input-wrapper">
+            <input type="email" class="input-field" name="profile_email" placeholder="Email address" [formControl]="emailForm.controls['email']">
+        </div>
+    </div>
+    <div class="row end-xs">
+        <div class="col-xs-6 input-wrapper">
+            <button type="submit" class="btn btn--full" (click)="updateEmail()" [disabled]="!emailFormIsValid()" [ngClass]="{'btn--gray': !emailFormIsValid()}">UPDATE EMAIL ADDRESS</button>
+        </div>
+    </div>
+</form>

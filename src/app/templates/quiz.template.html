@@ -1,0 +1,230 @@
+<form [formGroup]="quizForm" [ngStyle]="{display: limeProxiesService.showQuizPage?'block':'none'}" [ngSwitch]="limeProxiesService.quizPage" class="modal-overlay step-1 steps">
+    <div *ngSwitchCase="1" class="modal">
+        <div class="modal-content steps-content">
+            <span class="close-icon" (click)="closePage()"></span>
+            <h3 class="steps-title">What site do you want to access?</h3>
+            <div class="products">
+                <div class="products-inner gaming">
+                    <input type="radio" formControlName="type" id="gaming" value="gaming" hidden>
+                    <label class="products-icons gaming-icon" for="gaming" ></label>
+                    <label for="gaming"  class="products-title">Gaming</label>
+                </div>
+                <div class="products-inner ticketing">
+                    <input type="radio" formControlName="type" id="ticketing" value="ticketing" hidden>
+                    <label class="products-icons ticketing-icon" for="ticketing" ></label>
+                    <label for="ticketing"  class="products-title">Ticketing</label>
+                </div>
+                <div class="products-inner socks">
+                    <input type="radio" formControlName="type" id="socks" value="socks" hidden>
+                    <label class="products-icons socks-icon" for="socks" ></label>
+                    <label for="socks"  class="products-title">Socks</label>
+                </div>
+                <div class="products-inner classified">
+                    <input type="radio" formControlName="type" id="classified" value="classified" hidden>
+                    <label class="products-icons classified-icon" for="classified" ></label>
+                    <label for="classified"  class="products-title">Classified</label>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="steps-position">
+                <span class="steps-position-title">Step 1</span>
+                <span class="steps-road">
+                    <span class="border"></span>
+                    <span class="steps-circles">
+                        <span class="steps-circle active"></span>
+                        <span class="steps-circle"></span>
+                        <span class="steps-circle"></span>
+                    </span>
+                </span>
+            </div>
+            <div class="next-step" [ngClass]="{disabled:(nextDisabled || !quizForm.get('type').value)}">
+                <button class="next-btn" (click)="nextPageOne()" [disabled]="nextDisabled || !quizForm.get('type').value">Next ></button>
+            </div>
+        </div></div>
+    <div *ngSwitchCase="2" class="modal">
+        <div class="modal-content steps-content">
+            <span class="close-icon" (click)="closePage()"></span>
+            <div class="steps-text-box">
+                <div class="left-img">
+                    <span class="left-icon tolls-icon"></span>
+                </div>
+                <div class="right-txt">
+                    <h3 class="steps-title">Setup Authorized IPs</h3>
+                    <p class="steps-txt">You can enter up to 3 IPs that you will use to access the proxies package you need. </p>
+                </div>
+            </div>
+            <div class="steps-form" formArrayName="ips">
+                <div class="form-group" *ngFor="let ip of quizForm.controls.ips.controls; let i=index">
+                    <label for="ip" class="form-icon shield-ckeck-sm"></label>
+                    <input type="text" [formControlName]="i" style="width: 80%" class="form-control" id="ip" placeholder="Ex: 192.168.0.0">
+                    <div class="form-icon shield-ckeck-sm" for="ip" style="right: 8px; left: auto; " (click)="addIp($event)"></div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="steps-position">
+                <span class="steps-position-title">Step 1</span>
+                <span class="steps-road">
+                    <span class="border"></span>
+                    <span class="steps-circles">
+                        <span class="steps-circle active"></span>
+                        <span class="steps-circle"></span>
+                        <span class="steps-circle"></span>
+                    </span>
+                </span>
+            </div>
+            <div class="next-step" [ngClass]="{disabled:nextDisabled}">
+                <button class="next-btn" (click)="nextPageTwo()">Next ></button>
+            </div>
+        </div></div>
+    <div *ngSwitchCase="3" class="modal">
+        <div class="modal-content steps-content">
+            <span class="close-icon" (click)="closePage()"></span>
+            <div class="steps-text-box">
+                <div class="left-img">
+                    <span class="left-icon tel-icon"></span>
+                </div>
+                <div class="right-txt">
+                    <h3 class="steps-title">Start your Free Trial</h3>
+                    <p class="steps-txt">If you want a free trial enter your phone number and proceed to
+                        verification.</p>
+                </div>
+            </div>
+            <div class="steps-form">
+                <div class="form-group">
+                    <label for="tel" class="form-icon tel-icon-sm"></label>
+                    <select name="code" class="form-control" style="float: left;width: 45%;" formControlName="phone_cc">
+                        <option value="" selected>Select Country</option>
+                        <option [ngValue]='country' *ngFor="let country of countryWithPhone">{{country.name}} ({{country.code}})</option>
+                    </select>
+                    <input type="tel" formControlName="phone" style="margin-left: 1%;width: 54%;" class="form-control" id="tel" placeholder="7242 2142 123">
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="steps-position">
+                <span class="steps-position-title">Step 2</span>
+                <span class="steps-road">
+                    <span class="border"></span>
+                    <span class="steps-circles">
+                        <span class="steps-circle active"></span>
+                        <span class="steps-circle active"></span>
+                        <span class="steps-circle"></span>
+                    </span>
+                </span>
+            </div>
+            <div class="next-step" [ngClass]="{disabled:(nextDisabled || !quizForm.get('phone_cc').valid || !quizForm.get('phone').valid)}">
+                <button class="next-btn" [disabled]="nextDisabled || !quizForm.get('phone_cc').valid || !quizForm.get('phone').valid" (click)="nextPageTree()">Next ></button>
+            </div>
+        </div></div>
+    <div *ngSwitchCase="4" class="modal">
+        <div class="modal-content steps-content">
+            <span class="close-icon" (click)="closePage()"></span>
+            <div class="steps-text-box">
+                <div class="left-img">
+                    <span class="left-icon check-icon"></span>
+                </div>
+                <div class="right-txt">
+                    <h3 class="steps-title">Verify your phone number</h3>
+                  <p class="steps-txt">Please provide the verification code received on your mobile phone.</p>
+                </div>
+            </div>
+            <div class="steps-form">
+                <div class="form-group">
+                    <label for="tel" class="form-icon tel-icon-sm"></label>
+                    <input type="tel" (keypress)="limeProxiesService._keyPress($event)" formControlName="phone_code" class="form-control" id="phone_code" placeholder="XXXX">
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="steps-position">
+                <span class="steps-position-title">Step 2</span>
+                <span class="steps-road">
+                    <span class="border"></span>
+                    <span class="steps-circles">
+                        <span class="steps-circle active"></span>
+                        <span class="steps-circle active"></span>
+                        <span class="steps-circle"></span>
+                    </span>
+                </span>
+            </div>
+            <div class="next-step" [ngClass]="{disabled:nextDisabled || !quizForm.get('phone_code').valid}">
+                <button class="next-btn" (click)="nextPageFour()" [disabled]="nextDisabled || !quizForm.get('phone_code').valid">Next ></button>
+            </div>
+        </div></div>
+    <div *ngSwitchCase="5" class="modal">
+        <div class="modal-content steps-content">
+            <span class="close-icon" (click)="closePage()"></span>
+            <div class="steps-text-box">
+                <div class="left-img">
+                    <span class="left-icon user-icon"></span>
+                </div>
+                <div class="right-txt">
+                    <h3 class="steps-title">Phone number verified</h3>
+                    <p class="steps-txt">Your account setup is done. You can now enjoy our service by choosing a server.</p>
+                </div>
+            </div>
+            <div class="steps-form">
+                <div class="form-group">
+                    <label for="product" class="form-icon" [ngClass]="{'flag-icon-sm': quizForm.get('product').value != 'uk','flag-icon-sm-uk': quizForm.get('product').value == 'uk' }"></label>
+                    <div class="styled-select">
+                        <select formControlName="product" class="form-control" id="product">
+                            <option value="">Proxy type</option>
+                            <option value="private">Private</option>
+                            <option value="premium_private">Premium Private</option>
+                            <option value="uk">UK</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="steps-position">
+                <span class="steps-position-title">Step 3</span>
+                <span class="steps-road">
+                    <span class="border"></span>
+                    <span class="steps-circles">
+                        <span class="steps-circle active"></span>
+                        <span class="steps-circle active"></span>
+                        <span class="steps-circle active"></span>
+                    </span>
+                </span>
+            </div>
+            <div class="next-step" [ngClass]="{disabled:(nextDisabled || !quizForm.get('product').valid)}">
+                <button class="next-btn" (click)="completePage()" [disabled]="nextDisabled || !quizForm.get('product').valid">complete ></button>
+            </div>
+        </div>
+    </div>
+    <div *ngSwitchCase="6" class="modal">
+        <div class="modal-content steps-content">
+            <span class="close-icon" (click)="closePage()"></span>
+            <h3 class="steps-title">Your test proxy has now been setup</h3>
+            <div class="steps-outputs">
+                <p class="steps-output-txt">
+                    <strong>Proxy type: </strong>
+                    <span>{{proxy_type}}</span>
+                </p>
+                <p class="steps-output-txt">
+                    <strong>Proxy IP: </strong>
+                    <span>{{proxy_ip}}</span>
+                </p>
+                <p class="steps-output-txt">
+                    <strong>Proxy port: </strong>
+                    <span>{{proxy_port}}</span>
+                </p>
+                <p class="steps-output-txt">
+                    <strong>Authentication method:  </strong>
+                    <span>{{proxy_auth}}</span>
+                </p>
+            </div>
+            <p class="steps-txt center-block">
+              Please allow up to 3 minutes for your proxies to become active to start using them.
+            </p>
+        </div>
+        <div class="modal-footer">
+            <div class="close-steps">
+                <button class="next-btn" (click)="closeFinalPage()">close</button>
+            </div>
+        </div></div>
+</form>
